@@ -1,9 +1,11 @@
+'use client'
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/firebase.config";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { signOut } from "firebase/auth";
+import Weather from "./Weather";
 
 const Navbar = () => {
   const [user] = useAuthState(auth);
@@ -20,11 +22,12 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between py-4 px-9">
+    <div className="flex items-start justify-between py-4 px-9">
       <div>
-        <a href="/" className="text-2xl w-fit font-semibold">
+        <Weather/>
+        {/* <a href="/" className="text-2xl w-fit font-semibold">
           AgroWorld
-        </a>
+        </a> */}
       </div>
       <div className="w-2/5">
         <ul className="w-full flex justify-between items-center text-lg">
@@ -45,9 +48,9 @@ const Navbar = () => {
           </li>
           <li>
             {user ? (
-              <Button onClick={handleLogout}>Logout</Button>
+              <Button onClick={handleLogout} variant={"primary"}>Logout</Button>
             ) : (
-              <Button onClick={handleSignup}>Signup</Button>
+              <Button onClick={handleSignup} variant={"primary"}>Signup</Button>
             )}
           </li>
         </ul>

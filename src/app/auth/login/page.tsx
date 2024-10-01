@@ -55,7 +55,7 @@ const SigninPage = () => {
     <section className="flex items-center justify-center min-h-screen bg-gray-50 p-6">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Sign In</CardTitle>
+          <CardTitle className="text-2xl font-bold text-green-500">Sign In</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -88,7 +88,7 @@ const SigninPage = () => {
               />
             </div>
             <Button
-              variant="default"
+              variant="primary"
               className="w-full"
               type="submit"
               disabled={loading}
