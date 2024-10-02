@@ -10,7 +10,6 @@ import Weather from "./Weather";
 const Navbar = () => {
   const [user] = useAuthState(auth);
   const router = useRouter();
-  const userSession = sessionStorage.getItem("user");
 
   const handleSignup = () => {
     router.push("/auth/login");
@@ -18,7 +17,6 @@ const Navbar = () => {
 
   const handleLogout = () => {
     signOut(auth);
-    sessionStorage.removeItem("user");
   };
 
   return (

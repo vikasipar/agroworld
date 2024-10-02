@@ -1,0 +1,115 @@
+{
+    "categories": [
+        {
+            "name": "Tractor And Related Equipment",
+            "products": [
+                {
+                    "EquipmentName": "Plough",
+                    "Category": "Tractor And Related Equipment",
+                    "url": "/static/plough.jpg",
+                    "Ratings": "4",
+                    "slug": "plough"
+                },
+                {
+                    "EquipmentName": "Harrows",
+                    "Category": "Tractor And Related Equipment",
+                    "url": "/static/harrows.jpeg",
+                    "Ratings": "5",
+                    "slug": "harrows"
+                },
+                {
+                    "EquipmentName": "Seed Drill",
+                    "Category": "Tractor And Related Equipment",
+                    "url": "/static/seed-drill.jpeg",
+                    "Ratings": "4",
+                    "slug": "seed-drill"
+                },
+                {
+                    "EquipmentName": "Rotavator",
+                    "Category": "Tractor And Related Equipment",
+                    "url": "/static/rotavator.jpeg",
+                    "Ratings": "3",
+                    "slug": "rotavator"
+                },
+                {
+                    "EquipmentName": "Trailer",
+                    "Category": "Tractor And Related Equipment",
+                    "url": "/static/trailer.jpeg",
+                    "Ratings": "5",
+                    "slug": "trailer"
+                }
+            ]
+        },
+        {
+            "name": "Transport Vehicles",
+            "products": [
+                {
+                    "EquipmentName": "Tata Ace",
+                    "Category": "Transport Vehicles",
+                    "url": "/static/ace.jpeg",
+                    "Ratings": "5",
+                    "slug": "tata-ace"
+                },
+                {
+                    "EquipmentName": "Mahindra Bolero Pik-Up",
+                    "Category": "Transport Vehicles",
+                    "url": "/static/pickup.jpeg",
+                    "Ratings": "4",
+                    "slug": "mahindra-bolero-pikup"
+                },
+                {
+                    "EquipmentName": "Ashok Leyland Dost",
+                    "Category": "Transport Vehicles",
+                    "url": "/static/leyland_dost.jpeg",
+                    "Ratings": "5",
+                    "slug": "ashok-leyland-dost"
+                }
+            ]
+        },
+        {
+            "name": "Harvesters",
+            "products": [
+                {
+                    "EquipmentName": "Wheat Harvester",
+                    "Category": "Harvesters",
+                    "url": "/static/wheat-harv.jpeg",
+                    "Ratings": "5",
+                    "slug": "wheat-harvester"
+                },
+                {
+                    "EquipmentName": "Rice Harvester",
+                    "Category": "Harvesters",
+                    "url": "/static/rice-harv.jpeg",
+                    "Ratings": "4",
+                    "slug": "rice-harvester"
+                },
+                {
+                    "EquipmentName": "Sugarcane Harvester",
+                    "Category": "Harvesters",
+                    "url": "/static/sugarcane-harv.jpeg",
+                    "Ratings": "5",
+                    "slug": "sugarcane-harvester"
+                }
+            ]
+        },
+        {
+            "name": "Corn Sheller",
+            "products": [
+                {
+                    "EquipmentName": "Corn Sheller",
+                    "Category": "Corn Sheller",
+                    "url": "/static/corn-sheller.jpeg",
+                    "Ratings": "5",
+                    "slug": "corn-sheller"
+                },
+                {
+                    "EquipmentName": "Small-Scale Corn Sheller",
+                    "Category": "Corn Sheller",
+                    "url": "/static/small_corn_sheller.png",
+                    "Ratings": "3",
+                    "slug": "small-scale-corn-sheller"
+                }
+            ]
+        }
+    ]
+}

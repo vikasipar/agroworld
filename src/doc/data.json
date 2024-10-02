@@ -1,0 +1,368 @@
+{
+    "products": [
+        {
+            "EquipmentName": "Plough (Plow)",
+            "Category": "Tractor And Related Equipment",
+            "Description": "A plough is used for primary tillage, turning over the topsoil to bury crop residues and weeds. It prepares the soil for planting by loosening and aerating it, improving water retention and drainage.",
+            "Brand": "Mahindra & Mahindra",
+            "Price": "599/- Per Acres",
+            "Location": "Pune, Maharashtra",
+            "Availability": "Available",
+            "Condition": "Good",
+            "Specifications": {
+                "Power": "50 HP",
+                "FuelType": "Diesel"
+            },
+            "Accessories": "None",
+            "RentalTerms": "Minimum 2 acres per rental",
+            "Videos": [
+                "https://example.com/images/plough.jpg"
+            ],
+            "Ratings": "4",
+            "DeliveryOptions": "Available with Rs. 200 delivery charge",
+            "Insurance": "Optional insurance for Rs. 100",
+            "Service": "24/7 customer support available",
+            "UsageInstructions": "Ensure proper field moisture before ploughing.",
+            "ContactInformation": "Owner: Krishna Ghuge, +91-1234567890",
+            "url": "/static/plough.jpeg",
+            "slug": "plough"
+        },
+        {
+            "EquipmentName": "Harrows",
+            "Category": "Tractor And Related Equipment",
+            "Description": "Harrows break up clods of soil, smooth the field surface, and remove weeds after ploughing. They help prepare the seedbed, ensuring an even and fine texture for optimal seed germination.",
+            "Brand": "John Deere",
+            "Price": "699/- Per Acres",
+            "Location": "Nashik, Maharashtra",
+            "Availability": "Rented",
+            "Condition": "New",
+            "Specifications": {
+                "Power": "60 HP",
+                "FuelType": "Diesel"
+            },
+            "Accessories": "None",
+            "RentalTerms": "Minimum 1 acre per rental",
+            "Videos": [
+                "https://example.com/images/harrows.jpg"
+            ],
+            "Ratings": "5",
+            "DeliveryOptions": "Available with Rs. 250 delivery charge",
+            "Insurance": "Mandatory insurance included in price",
+            "Service": "On-site technical support",
+            "UsageInstructions": "Ensure soil is ploughed before using harrows.",
+            "ContactInformation": "Owner: Ajay Patil, +91-9876543210",
+            "url": "/static/harrows.jpeg",
+            "slug": "harrows"
+        },
+        {
+            "EquipmentName": "Seed Drill",
+            "Category": "Tractor And Related Equipment",
+            "Description": "A seed drill plants seeds at uniform depth and spacing, enhancing crop yields. It ensures precise seed placement, reducing wastage and increasing the efficiency of germination compared to traditional broadcasting methods.",
+            "Brand": "Sonalika",
+            "Price": "799/- Per Acres",
+            "Location": "Kolhapur, Maharashtra",
+            "Availability": "Available",
+            "Condition": "Good",
+            "Specifications": {
+                "Power": "45 HP",
+                "FuelType": "Diesel"
+            },
+            "Accessories": "Seed containers",
+            "RentalTerms": "No minimum limit",
+            "Videos": [
+                "https://example.com/images/seed_drill.jpg"
+            ],
+            "Ratings": "4",
+            "DeliveryOptions": "Free delivery within 50km",
+            "Insurance": "Optional insurance available",
+            "Service": "Remote assistance",
+            "UsageInstructions": "Ensure uniform seed types are loaded.",
+            "ContactInformation": "Owner: Rahul Deshmukh, +91-1122334455",
+            "url": "/static/seed-drill.jpeg",
+            "slug": "seed-drill"
+        },
+        {
+            "EquipmentName": "Rotavator",
+            "Category": "Tractor And Related Equipment",
+            "Description": "Rotavators break up and mix the soil, creating a fine seedbed ideal for planting. They reduce the need for multiple passes over the field, saving time and fuel, and improve soil aeration.",
+            "Brand": "Escorts Group",
+            "Price": "899/- Per Acres",
+            "Location": "Nagpur, Maharashtra",
+            "Availability": "Rented",
+            "Condition": "Used",
+            "Specifications": {
+                "Power": "70 HP",
+                "FuelType": "Diesel"
+            },
+            "Accessories": "Rotary blades",
+            "RentalTerms": "Minimum 5 acres per rental",
+            "Videos": [
+                "https://example.com/images/rotavator.jpg"
+            ],
+            "Ratings": "3",
+            "DeliveryOptions": "Rs. 300 for delivery",
+            "Insurance": "Mandatory insurance for Rs. 150",
+            "Service": "On-call support",
+            "UsageInstructions": "Best used after ploughing for aeration.",
+            "ContactInformation": "Owner: Shivaji Jadhav, +91-5566778899",
+            "url": "/static/rotavator.jpeg",
+            "slug": "rotavator"
+        },
+        {
+            "EquipmentName": "Trailer",
+            "Category": "Tractor And Related Equipment",
+            "Description": "A trailer attached to a tractor is used for transporting materials like harvested crops, fertilizers, tools, or even farm animals. It increases efficiency in moving heavy loads across the farm.",
+            "Brand": "Bharat Tractor",
+            "Price": "999/- Per Acres",
+            "Location": "Aurangabad, Maharashtra",
+            "Availability": "Available",
+            "Condition": "New",
+            "Specifications": {
+                "Capacity": "5000 kg",
+                "Dimensions": "12 ft x 6 ft"
+            },
+            "Accessories": "None",
+            "RentalTerms": "Daily rentals available",
+            "Videos": [
+                "https://example.com/images/trailer.jpg"
+            ],
+            "Ratings": "5",
+            "DeliveryOptions": "Free delivery within 20km",
+            "Insurance": "Available upon request",
+            "Service": "On-site support if needed",
+            "UsageInstructions": "Ensure load distribution is even.",
+            "ContactInformation": "Owner: Prakash Kadam, +91-6677889900",
+            "url": "/static/trailer.jpeg",
+            "slug": "trailer"
+        },
+        {
+            "EquipmentName": "Tata Ace",
+            "Category": "Transport Vehicles",
+            "Description": "The Tata Ace is a popular small truck known for its maneuverability and efficiency in urban areas. It is often used for transporting goods, furniture, and agricultural products.",
+            "Brand": "Tata Motors",
+            "Price": "100/- Per KM",
+            "Location": "Mumbai, Maharashtra",
+            "Availability": "Available",
+            "Condition": "Good",
+            "Specifications": {
+                "Type": "Light Commercial Vehicle",
+                "Capacity": "1 ton (1000 kg)",
+                "FuelType": "Diesel"
+            },
+            "Accessories": "None",
+            "RentalTerms": "Minimum 50 KM rental per booking",
+            "Videos": [
+                "https://example.com/images/tata_ace.jpg"
+            ],
+            "Ratings": "5",
+            "DeliveryOptions": "Free delivery for rentals over 100 KM",
+            "Insurance": "Optional insurance for Rs. 500",
+            "Service": "24/7 roadside assistance available",
+            "UsageInstructions": "Ensure load does not exceed the weight limit.",
+            "ContactInformation": "Owner: Raju Pawar, +91-9876543210",
+            "url": "/static/ace.jpeg",
+            "slug": "tata-ace"
+        },
+        {
+            "EquipmentName": "Mahindra Bolero Pik-Up",
+            "Category": "Transport Vehicles",
+            "Description": "The Bolero Pik-Up is a rugged vehicle designed for rough terrains. It is widely used for transporting agricultural produce, construction materials, and other goods.",
+            "Brand": "Mahindra & Mahindra",
+            "Price": "200/- Per KM",
+            "Location": "Pune, Maharashtra",
+            "Availability": "Rented",
+            "Condition": "New",
+            "Specifications": {
+                "Type": "Pickup Truck",
+                "Capacity": "1 ton to 1.5 tons (1000-1500 kg)",
+                "FuelType": "Diesel"
+            },
+            "Accessories": "Tow hook, tool kit",
+            "RentalTerms": "Minimum 100 KM rental per booking",
+            "Videos": [
+                "https://example.com/images/bolero_pickup.jpg"
+            ],
+            "Ratings": "4",
+            "DeliveryOptions": "Available with Rs. 300 delivery fee",
+            "Insurance": "Mandatory insurance included in price",
+            "Service": "On-call mechanical support",
+            "UsageInstructions": "Check tire pressure before use.",
+            "ContactInformation": "Owner: Vijay Jadhav, +91-9988776655",
+            "url": "/static/pickup.jpeg",
+            "slug": "mahindra-bolero-pikup"
+        },
+        {
+            "EquipmentName": "Ashok Leyland Dost",
+            "Category": "Transport Vehicles",
+            "Description": "The Dost is known for its strong build and reliability. It is used for various applications, including goods transportation, small-scale deliveries, and logistics.",
+            "Brand": "Ashok Leyland",
+            "Price": "250/- Per KM",
+            "Location": "Nagpur, Maharashtra",
+            "Availability": "Available",
+            "Condition": "Good",
+            "Specifications": {
+                "Type": "Light Commercial Vehicle",
+                "Capacity": "1.5 tons (1500 kg)",
+                "FuelType": "Diesel"
+            },
+            "Accessories": "None",
+            "RentalTerms": "Minimum 150 KM rental per booking",
+            "Videos": [
+                "https://example.com/images/leyland_dost.jpg"
+            ],
+            "Ratings": "5",
+            "DeliveryOptions": "Free delivery for rentals over 150 KM",
+            "Insurance": "Optional insurance for Rs. 1000",
+            "Service": "Technical assistance available",
+            "UsageInstructions": "Do not overload beyond capacity.",
+            "ContactInformation": "Owner: Shivaji Patil, +91-8877665544",
+            "url": "/static/leyland_dost.jpeg",
+            "slug": "ashok-leyland-dost"
+        },
+        {
+            "EquipmentName": "Wheat Harvester",
+            "Category": "Harvesters",
+            "Description": "A wheat harvester, typically a combine harvester, efficiently cuts, threshes, and separates wheat grains from the straw in a single pass. It significantly reduces harvest time and labor costs while maximizing grain quality.",
+            "Brand": "John Deere",
+            "Price": "999/- Per Hour",
+            "Location": "Nashik, Maharashtra",
+            "Availability": "Available",
+            "Condition": "New",
+            "Specifications": {
+                "Type": "Combine Harvester",
+                "Power": "150 HP",
+                "FuelType": "Diesel",
+                "Capacity": "3-4 acres per hour"
+            },
+            "Accessories": "Straw chopper, grain tank",
+            "RentalTerms": "Minimum 5 hours rental required",
+            "Videos": [
+                "https://example.com/images/wheat_harvester.jpg"
+            ],
+            "Ratings": "5",
+            "DeliveryOptions": "Delivery available for Rs. 1000",
+            "Insurance": "Included in rental price",
+            "Service": "On-site support and maintenance available",
+            "UsageInstructions": "Ensure to adjust the header height for optimal cutting.",
+            "ContactInformation": "Owner: Ganesh Thakur, +91-9876543210",
+            "url": "/static/wheat-harv.jpeg",
+            "slug": "wheat-harvester"
+        },
+        {
+            "EquipmentName": "Rice Harvester",
+            "Category": "Harvesters",
+            "Description": "A rice harvester, often a specialized machine, cuts and collects rice plants while minimizing grain loss. It is designed for the unique growing conditions of paddy fields, ensuring efficient harvest of this staple crop.",
+            "Brand": "New Holland",
+            "Price": "899/- Per Hour",
+            "Location": "Nagpur, Maharashtra",
+            "Availability": "Rented",
+            "Condition": "Good",
+            "Specifications": {
+                "Type": "Rice Combine Harvester",
+                "Power": "120 HP",
+                "FuelType": "Diesel",
+                "Capacity": "2-3 acres per hour"
+            },
+            "Accessories": "Paddy reel, grain tank",
+            "RentalTerms": "Minimum 4 hours rental required",
+            "Videos": [
+                "https://example.com/images/rice_harvester.jpg"
+            ],
+            "Ratings": "4",
+            "DeliveryOptions": "Delivery available for Rs. 800",
+            "Insurance": "Optional insurance available for Rs. 500",
+            "Service": "24/7 technical support",
+            "UsageInstructions": "Operate at a moderate speed to avoid grain loss.",
+            "ContactInformation": "Owner: Sanjay Deshmukh, +91-9988776655",
+            "url": "/static/rice-harv.jpeg",
+            "slug": "rice-harvester"
+        },
+        {
+            "EquipmentName": "Sugarcane Harvester",
+            "Category": "Harvesters",
+            "Description": "A sugarcane harvester is a powerful machine that cuts sugarcane stalks, removes leaves, and loads them directly onto transport vehicles. It streamlines the harvesting process, increasing efficiency and reducing manual labor in sugarcane production.",
+            "Brand": "Sonalika",
+            "Price": "1200/- Per Hour",
+            "Location": "Kolhapur, Maharashtra",
+            "Availability": "Available",
+            "Condition": "Used",
+            "Specifications": {
+                "Type": "Sugarcane Harvester",
+                "Power": "180 HP",
+                "FuelType": "Diesel",
+                "Capacity": "3 acres per hour"
+            },
+            "Accessories": "Chopper mechanism, loading spout",
+            "RentalTerms": "Minimum 6 hours rental required",
+            "Videos": [
+                "https://example.com/images/sugarcane_harvester.jpg"
+            ],
+            "Ratings": "5",
+            "DeliveryOptions": "Delivery available for Rs. 1500",
+            "Insurance": "Mandatory insurance included",
+            "Service": "On-call support available during rental",
+            "UsageInstructions": "Ensure the harvester is aligned properly with sugarcane rows for efficient cutting.",
+            "ContactInformation": "Owner: Ajay Shetty, +91-8877665544",
+            "url": "/static/sugarcane-harv.jpeg",
+            "slug": "sugarcane-harvester"
+        },
+        {
+            "EquipmentName": "Corn Sheller",
+            "Category": "Corn Sheller",
+            "Description": "A corn sheller is a mechanical device designed to efficiently separate corn kernels from the cob. Using rotating brushes or metal teeth, it removes the kernels without damaging them, significantly speeding up the shelling process compared to manual methods.",
+            "Brand": "Kirloskar",
+            "Price": "499/- Per Hour",
+            "Location": "Pune, Maharashtra",
+            "Availability": "Available",
+            "Condition": "New",
+            "Specifications": {
+                "Type": "Mechanical Corn Sheller",
+                "Power": "15 HP",
+                "FuelType": "Diesel",
+                "Capacity": "500 kg/hour"
+            },
+            "Accessories": "Kernel separator, debris collector",
+            "RentalTerms": "Minimum 3 hours rental required",
+            "Videos": [
+                "https://example.com/images/corn_sheller.jpg"
+            ],
+            "Ratings": "5",
+            "DeliveryOptions": "Delivery available for Rs. 700",
+            "Insurance": "Optional insurance available for Rs. 300",
+            "Service": "On-site technical support available during rental",
+            "UsageInstructions": "Ensure proper calibration to avoid kernel damage during operation.",
+            "ContactInformation": "Owner: Vijay Jadhav, +91-9876543210",
+            "url": "/static/corn-sheller.jpeg",
+            "slug": "corn-sheller"
+        },
+        {
+            "EquipmentName": "Small-Scale Corn Sheller",
+            "Category": "Corn Sheller",
+            "Description": "A small-scale corn sheller ideal for small farms and local grain processing. It is compact, easy to operate, and provides excellent kernel separation without damaging the kernels.",
+            "Brand": "Escorts Group",
+            "Price": "299/- Per Hour",
+            "Location": "Satara, Maharashtra",
+            "Availability": "Available",
+            "Condition": "Used",
+            "Specifications": {
+                "Type": "Compact Corn Sheller",
+                "Power": "10 HP",
+                "FuelType": "Diesel",
+                "Capacity": "300 kg/hour"
+            },
+            "Accessories": "Portable frame, adjustable kernel size",
+            "RentalTerms": "Minimum 2 hours rental required",
+            "Videos": [
+                "https://example.com/images/small_corn_sheller.jpg"
+            ],
+            "Ratings": "3",
+            "DeliveryOptions": "Delivery available for Rs. 500",
+            "Insurance": "Optional insurance available for Rs. 200",
+            "Service": "Phone support available during rental",
+            "UsageInstructions": "Ensure the sheller is placed on stable ground to avoid vibration during operation.",
+            "ContactInformation": "Owner: Mahesh Bhosale, +91-8877665544",
+            "url": "/static/small_corn_sheller.png",
+            "slug": "small-scale-corn-sheller"
+        }
+    ]
+}

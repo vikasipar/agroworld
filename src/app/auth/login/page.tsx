@@ -38,7 +38,6 @@ const SigninPage = () => {
 
       if (res) {
         console.log("User signed in successfully:", res.user);
-        sessionStorage.setItem("user", "true");
         setEmail("");
         setPassword("");
         router.push("/");

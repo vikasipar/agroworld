@@ -46,7 +46,6 @@ const SignupPage = () => {
       // Check if user creation was successful
       if (res) {
         // console.log("User created successfully:", res.user);
-        sessionStorage.setItem("user", "true");
         setEmail("");
         setPassword("");
         setConfirmPassword("");
