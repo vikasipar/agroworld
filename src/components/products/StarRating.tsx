@@ -2,11 +2,11 @@ import React from "react";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 interface StarRatingProps {
-  rating: number;
+  rating: number | string;
 }
 
 const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
-  const roundOff = Math.round(rating * 2) / 2;
+  const roundOff = Math.round(Number(rating) * 2) / 2;
 
   const renderStars = () => {
     const stars = [];
