@@ -1,6 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
 import Product from "@/models/product";
-import { IProduct } from "@/types/modelTypes";
 
 // Get all categories
 export async function getAllCategories() {

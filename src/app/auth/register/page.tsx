@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,15 +10,18 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/firebase.config";
 import { useRouter } from "next/navigation";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState<"user" | "provider">("user");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState<string | null>(null); // For displaying errors
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const [createUserWithEmailAndPassword, user, loading, firebaseError] =
@@ -29,8 +31,7 @@ const SignupPage = () => {
     e.preventDefault();
     setError(null);
 
-    // Validation
-    if (!email || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword || !name || !role) {
       setError("All fields are required.");
       return;
     }
@@ -43,13 +44,33 @@ const SignupPage = () => {
     try {
       const res = await createUserWithEmailAndPassword(email, password);
 
-      // Check if user creation was successful
       if (res) {
-        // console.log("User created successfully:", res.user);
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
-        router.push("/");
+        // Firebase user creation successful
+
+        // Post user data to MongoDB API
+        const response = await fetch("/api/users/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            role,
+          }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          console.log("User saved to MongoDB:", result);
+          setEmail("");
+          setPassword("");
+          setConfirmPassword("");
+          router.push("/");
+        } else {
+          setError("Error saving user to MongoDB: " + result.error);
+        }
       } else {
         setError("User creation failed. Please try again.");
       }
@@ -67,16 +88,44 @@ const SignupPage = () => {
         </CardHeader>
         <CardContent>
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-          {firebaseError && (
-            <p className="text-red-500 text-center mb-4">
-              {firebaseError.message}
-            </p>
-          )}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-base font-medium">
-                Email
-              </Label>
+          {firebaseError && <p className="text-red-500 text-center mb-4">{firebaseError.message}</p>}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-1">
+              <Label htmlFor="name" className="text-base font-medium">Name</Label>
+              <Input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="w-full"
+                placeholder="Enter your name"
+              />
+            </div>
+            <div className="space-y-1">
+              <Label htmlFor="none" className="text-base font-medium">Role</Label>
+              <RadioGroup
+                defaultValue="option-one"
+                className="flex justify-start items-center gap-x-8"
+              >
+                <div
+                  className="flex items-center space-x-2"
+                  onClick={() => setRole("user")}
+                >
+                  <RadioGroupItem value="option-one" id="option-one" />
+                  <Label htmlFor="option-one">User</Label>
+                </div>
+                <div
+                  className="flex items-center space-x-2"
+                  onClick={() => setRole("provider")}
+                >
+                  <RadioGroupItem value="option-two" id="option-two" />
+                  <Label htmlFor="option-two">Provider</Label>
+                </div>
+              </RadioGroup>
+            </div>
+            <div className="space-y-1">
+              <Label htmlFor="email" className="text-base font-medium">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -87,10 +136,8 @@ const SignupPage = () => {
                 placeholder="Enter your email"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-base font-medium">
-                Password
-              </Label>
+            <div className="space-y-1">
+              <Label htmlFor="password" className="text-base font-medium">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -101,13 +148,8 @@ const SignupPage = () => {
                 placeholder="Enter your password"
               />
             </div>
-            <div className="space-y-2">
-              <Label
-                htmlFor="confirmPassword"
-                className="text-base font-medium"
-              >
-                Confirm Password
-              </Label>
+            <div className="space-y-1">
+              <Label htmlFor="confirmPassword" className="text-base font-medium">Confirm Password</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -120,11 +162,11 @@ const SignupPage = () => {
             </div>
             <Button
               variant="primary"
-              className="w-full"
+              className="w-full font-bold"
               type="submit"
               disabled={loading} // Disable button during API call
             >
-              {loading ? "Signing up..." : "Sign Up"}
+              {loading ? "Signing up..." : "Register"}
             </Button>
           </form>
         </CardContent>

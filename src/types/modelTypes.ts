@@ -6,6 +6,13 @@ export interface ICategory {
   slug: string;
 }
 
+export interface IUser {
+  name: string;
+  role: 'user'|'provider';
+  email: string;
+  delete: true | false;
+}
+
 export interface IProduct {
   EquipmentName: string;
   Category: string;
@@ -30,4 +37,5 @@ export interface IProduct {
   ContactInformation: string;
   url: string;
   slug: string;
+  provider: string;
 }

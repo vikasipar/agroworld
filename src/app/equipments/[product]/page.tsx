@@ -8,6 +8,7 @@ import ProductCard from "@/components/products/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "@/actions/getProduct";
 import { IProduct } from "@/types/modelTypes";
+import { CgUnavailable } from "react-icons/cg";
 
 const ProductPage = () => {
   const { product: productSlug } = useParams(); // Get the product slug from the URL
@@ -156,7 +157,10 @@ const ProductPage = () => {
       <div className="w-full">
         <div className="flex flex-wrap items-center justify-start w-[90%] mx-auto gap-4 mt-4 mb-20">
           {relatedProducts.length === 0 ? (
-            <p>No related products found.</p>
+            <p className="text-lg flex items-center space-x-1">
+              <CgUnavailable className="text-2xl text-orange-600" />
+              <span className="text-yellow-500">No related products found. <a href="/equipments" className="text-blue-700 underline font-normal">Show all Equipments.</a></span>
+            </p>
           ) : (
             relatedProducts.map((similarProduct, index) => (
               <ProductCard key={index} product={similarProduct} />
