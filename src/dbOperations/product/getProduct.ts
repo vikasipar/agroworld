@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import Product from "@/models/product";
+import { IProduct } from "@/types/modelTypes";
 
 // Get all categories
 export async function getAllCategories() {
@@ -27,8 +28,15 @@ export async function getProductBySlug(slug: string) {
 
 // Get products by category
 export async function getProductsByCategory(category: string) {
-  await dbConnect(); // Connect to the database
+  try {
+    await dbConnect();
 
-  const products = await Product.find({ Category: category }); // Fetch products by category
-  return products;
+    // Fetch all products that match the specified category
+    const products = await Product.find({ Category: category });
+
+    return products; // Return the list of products
+  } catch (error) {
+    console.error("[GET_PRODUCTS_BY_CATEGORY_ERROR]", error);
+    return []; // Return an empty array on error
+  }
 }

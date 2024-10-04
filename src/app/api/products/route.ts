@@ -1,20 +1,23 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getAllProducts } from "@/dbOperations/product/getProduct";
+import { IProduct } from "@/types/modelTypes";
 
-export async function GET() {
+export async function GET(_req: Request) {
   try {
-    const products = await getAllProducts();
-    return NextResponse.json(products);
+    const allProducts: IProduct[] = await getAllProducts();
+
+    if (!allProducts || allProducts.length === 0) {
+      return NextResponse.json(
+        { message: "Products not found!" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(allProducts, { status: 200 });
   } catch (error) {
-    const errormessage = { message: "Get All Products Error!", error: error };
-    return errormessage;
+    return NextResponse.json(
+      { message: "GET All Products Error", error: error },
+      { status: 500 }
+    );
   }
 }
-
-// export const GET = async (req: Request) => {
-//   console.log("get request is working!");
-
-//   const message = { success: true, message: "GET request successful" };
-
-//   return NextResponse.json(message);
-// };

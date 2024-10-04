@@ -9,9 +9,10 @@ import {
 } from "@/components/ui/card";
 import StarRating from "./StarRating";
 import Link from "next/link";
+import { IProduct } from "@/types/modelTypes";
 
 interface ProductCardProps {
-  product: any;
+  product: IProduct;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
@@ -33,7 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </CardHeader>
         <CardContent>
           <p className="text-sm text-gray-500 text-center w-full -my-4">
-            {product.Category}
+            {product.Category.replace(/-/g, ' ')}
           </p>
         </CardContent>
         <CardFooter>

@@ -1,14 +1,14 @@
-import Products from '@/components/products/Products';
-import SearchProduct from '@/components/products/SearchProduct';
-import React from 'react';
+import SearchProduct from "@/components/products/SearchProduct";
+import React from "react";
+import PaginationComponent from "@/components/layout/Pagination";
 
 const EquipmentsPage = () => {
   return (
     <div>
-        <SearchProduct/>
-        {/* <Products/> */}
+      <SearchProduct />
+      {/* <PaginationComponent /> */}
     </div>
-  )
-}
+  );
+};
 
 export default EquipmentsPage;

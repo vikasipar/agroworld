@@ -18,7 +18,7 @@ export async function GET(
     return NextResponse.json(product, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { message: "GET Product error", error: error }, 
+      { message: "GET Product Error", error: error }, 
       { status: 500 }
     );
   }
