@@ -41,6 +41,15 @@ export async function getProductBySlug(
   return res.json();
 }
 
+// get product by id
+export async function getProductById(
+  productId: string | string[]
+): Promise<IProduct> {
+  const res = await fetch(`${API_URL}/api/products/${productId}`);
+  if (!res.ok) throw new Error("Network response was not ok");
+  return res.json();
+}
+
 // get products by category
 export async function getProductsByCategory(slug: string | string[]) {
   const res = await fetch(`${API_URL}/api/products/${slug}`);

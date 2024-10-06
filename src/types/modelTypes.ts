@@ -8,7 +8,7 @@ export interface ICategory {
 
 export interface IUser {
   name: string;
-  role: 'user'|'provider';
+  role: "user" | "provider";
   email: string;
   delete: true | false;
 }
@@ -38,4 +38,14 @@ export interface IProduct {
   url: string;
   slug: string;
   provider: string;
+}
+
+export interface CartProducts {
+  productId: string;
+  quantity: number;
+}
+
+export interface ICart {
+  userId: string;
+  products: CartProducts[];
 }

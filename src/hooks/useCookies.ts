@@ -1,18 +1,21 @@
 // Function to set a cookie
 export const setCookie = (name: string, value: string, days: number) => {
-  const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  document.cookie = `${name}=${encodeURIComponent(
-    value
-  )}; expires=${expires}; path=/`;
+  if (typeof document !== 'undefined') { // Ensure it's only run in the browser
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+  }
 };
 
 // Function to delete a cookie
 export const deleteCookie = (name: string) => {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  if (typeof document !== 'undefined') { // Ensure it's only run in the browser
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
 };
 
 // Function to get a cookie
 export const getCookie = (name: string) => {
+  if (typeof document !== 'undefined') { // Ensure it's only run in the browser
     const nameEQ = name + "=";
     const cookies = document.cookie.split(';');
     
@@ -24,6 +27,7 @@ export const getCookie = (name: string) => {
         return decodeURIComponent(cookie.substring(nameEQ.length));
       }
     }
-    
-    return null; // Return null if the cookie was not found
-  };
+  }
+  
+  return null; // Return null if the cookie was not found
+};

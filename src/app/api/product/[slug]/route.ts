@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getProductBySlug } from "@/dbOperations/product/getProduct";
 
+// get product by slug
 export async function GET(
   _req: Request, 
   { params }: { params: { slug: string } }
@@ -23,3 +24,4 @@ export async function GET(
     );
   }
 }
+

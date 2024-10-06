@@ -9,6 +9,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "@/actions/getProduct";
 import { IProduct } from "@/types/modelTypes";
 import { CgUnavailable } from "react-icons/cg";
+import { getCookie } from "@/hooks/useCookies";
+import { toast } from "sonner";
 
 const ProductPage = () => {
   const { product: productSlug } = useParams(); // Get the product slug from the URL
@@ -44,9 +46,57 @@ const ProductPage = () => {
     }
   }, [data, productSlug]);
 
-  const addToCartHandler = (product: IProduct) => {
-    // Add product to the cart logic here
-    console.log("Product added to cart", product);
+  // const addToCartHandler = async (product: any) => {
+  //   // Add product to the cart logic here
+  //   // console.log("Product added", product._id);
+  //   const paylload = {
+  //     productId: product.slug,
+  //     quantity: 1,
+  //   }
+  //   try {
+  //     const userId = getCookie("userId");
+  //     const response = await fetch(`/api/cart/${userId}`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(paylload),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("Failed to submit product data");
+  //     }
+
+  //     const result = await response.json();
+  //     //   console.log("Product data submitted successfully:", result);
+  //     toast("Product added to cart!");
+  //   } catch (error) {
+  //     console.error("Error submitting product data:", error);
+  //   }
+  // };
+
+  const addToCartHandler = (productId: string) => {
+    // Get the existing cart from localStorage or initialize an empty array if not found
+    const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+
+    // Find if the product is already in the cart
+    const existingProduct = cartItems.find(
+      (item: any) => item.productId === productId
+    );
+
+    if (existingProduct) {
+      // If the product exists, increase the quantity
+      existingProduct.quantity += 1;
+    } else {
+      // If the product doesn't exist, add it with quantity 1
+      cartItems.push({ productId, quantity: 1 });
+    }
+
+    // Save the updated cart back to localStorage
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+    toast("Product added to cart!");
+    // console.log('Cart updated:', cartItems);
   };
 
   // Loading or error handling
@@ -65,7 +115,7 @@ const ProductPage = () => {
   return (
     <>
       <div className="md:flex flex-row-reverse h-[90vh] w-[90%] md:w-[85%] my-auto mx-auto items-center">
-        <div className="md:w-[50%] text-left">
+        <div className="md:w-[50%] text-left ml-4">
           <h1 className="text-2xl md:text-[2.4rem] text-gray-900 font-extrabold leading-tight">
             {currentProduct.EquipmentName}
           </h1>
@@ -76,7 +126,7 @@ const ProductPage = () => {
             ₹ {currentProduct.Price}
           </h3>
           <p className="md:text-xl uppercase font-bold text-green-600 my-2">
-            {currentProduct.Category.replace(/-/g, ' ')}
+            {currentProduct.Category.replace(/-/g, " ")}
           </p>
           <p className="my-3 md:my-auto text-justify text-gray-800">
             {currentProduct.Description}
@@ -88,9 +138,10 @@ const ProductPage = () => {
             </span>
           </div>
           <Button
-            onClick={() => addToCartHandler(currentProduct)}
+            onClick={() => addToCartHandler(currentProduct.slug)}
             variant="primary"
             className="mt-9 uppercase w-[60%] text-xl py-4 h-12"
+            disabled={!getCookie("useEmail")}
           >
             Add To Cart
           </Button>
@@ -159,7 +210,15 @@ const ProductPage = () => {
           {relatedProducts.length === 0 ? (
             <p className="text-lg flex items-center space-x-1">
               <CgUnavailable className="text-2xl text-orange-600" />
-              <span className="text-yellow-500">No related products found. <a href="/equipments" className="text-blue-700 underline font-normal">Show all Equipments.</a></span>
+              <span className="text-yellow-500">
+                No related products found.{" "}
+                <a
+                  href="/equipments"
+                  className="text-blue-700 underline font-normal"
+                >
+                  Show all Equipments.
+                </a>
+              </span>
             </p>
           ) : (
             relatedProducts.map((similarProduct, index) => (

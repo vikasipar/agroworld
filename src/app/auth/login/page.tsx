@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/firebase.config";
+import { getCookie } from "@/hooks/useCookies";
 
 const SigninPage = () => {
   const [email, setEmail] = useState("");
@@ -50,11 +50,19 @@ const SigninPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (getCookie("userEmail")) {
+      router.push("/");
+    }
+  }, []);
+
   return (
     <section className="flex items-center justify-center min-h-screen bg-gray-50 p-6">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-green-500">Sign In</CardTitle>
+          <CardTitle className="text-2xl font-bold text-green-500">
+            Sign In
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">

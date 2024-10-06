@@ -25,6 +25,14 @@ export async function getProductBySlug(slug: string) {
   return product;
 }
 
+// Get product by id
+export async function getProductByProductId(productId: string) {
+  await dbConnect(); // Connect to the database
+
+  const product = await Product.findOne({ productId }); // Fetch product by slug
+  return product;
+}
+
 // Get products by category
 export async function getProductsByCategory(category: string) {
   try {

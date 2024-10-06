@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +14,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/firebase.config";
 import { useRouter } from "next/navigation";
+import { getCookie } from "@/hooks/useCookies";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -80,18 +81,32 @@ const SignupPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (getCookie("userEmail")) {
+      router.push("/");
+    }
+  }, []);
+
   return (
     <section className="flex items-center justify-center min-h-screen bg-gray-50 p-6">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-green-500">Sign Up</CardTitle>
+          <CardTitle className="text-2xl font-bold text-green-500">
+            Sign Up
+          </CardTitle>
         </CardHeader>
         <CardContent>
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-          {firebaseError && <p className="text-red-500 text-center mb-4">{firebaseError.message}</p>}
+          {firebaseError && (
+            <p className="text-red-500 text-center mb-4">
+              {firebaseError.message}
+            </p>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1">
-              <Label htmlFor="name" className="text-base font-medium">Name</Label>
+              <Label htmlFor="name" className="text-base font-medium">
+                Name
+              </Label>
               <Input
                 id="name"
                 type="text"
@@ -103,7 +118,9 @@ const SignupPage = () => {
               />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="none" className="text-base font-medium">Role</Label>
+              <Label htmlFor="none" className="text-base font-medium">
+                Role
+              </Label>
               <RadioGroup
                 defaultValue="option-one"
                 className="flex justify-start items-center gap-x-8"
@@ -125,7 +142,9 @@ const SignupPage = () => {
               </RadioGroup>
             </div>
             <div className="space-y-1">
-              <Label htmlFor="email" className="text-base font-medium">Email</Label>
+              <Label htmlFor="email" className="text-base font-medium">
+                Email
+              </Label>
               <Input
                 id="email"
                 type="email"
@@ -137,7 +156,9 @@ const SignupPage = () => {
               />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="password" className="text-base font-medium">Password</Label>
+              <Label htmlFor="password" className="text-base font-medium">
+                Password
+              </Label>
               <Input
                 id="password"
                 type="password"
@@ -149,7 +170,12 @@ const SignupPage = () => {
               />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="confirmPassword" className="text-base font-medium">Confirm Password</Label>
+              <Label
+                htmlFor="confirmPassword"
+                className="text-base font-medium"
+              >
+                Confirm Password
+              </Label>
               <Input
                 id="confirmPassword"
                 type="password"
