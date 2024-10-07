@@ -11,18 +11,31 @@ import { IProduct } from "@/types/modelTypes";
 import { CgUnavailable } from "react-icons/cg";
 import { getCookie } from "@/hooks/useCookies";
 import { toast } from "sonner";
+import { usePayment } from "@/hooks/usePayment";
 
 const ProductPage = () => {
   const { product: productSlug } = useParams(); // Get the product slug from the URL
   const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null); // Set the current product
   const [relatedProducts, setRelatedProducts] = useState<IProduct[]>([]); // Set related products
-
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [isPaymentDone, setIsPaymentDone] = useState<boolean>(false);
   // Fetch the product data by slug
   // const { isLoading, isError, data, error } = useQuery<IProduct>({
   //   queryKey: ["product", product],
   //   queryFn: () => getProductBySlug(product),
   //   enabled: !!product,
   // });
+
+  useEffect(() => {
+    const userEmail: any = getCookie("useEmail");
+    const userName: any = getCookie("userName");
+    if (userEmail) {
+      setIsUserLoggedIn(true);
+    } else {
+      setIsUserLoggedIn(false);
+    }
+  }, []);
 
   // Fetch all products data
   const { isLoading, isError, data, error } = useQuery<IProduct[]>({
@@ -99,6 +112,22 @@ const ProductPage = () => {
     // console.log('Cart updated:', cartItems);
   };
 
+  // Handle payment
+  const handlePayment = () => {
+    const userEmail: any = getCookie("useEmail");
+    const userName: any = getCookie("userName");
+    // if (userEmail) {
+      usePayment(userEmail, userName, setIsProcessing, setIsPaymentDone);
+    // } 
+  };
+
+  // set request to provider after payment
+  useEffect(() => {
+    if(isPaymentDone){
+      
+    }
+  }, [isPaymentDone]);
+
   // Loading or error handling
   if (isLoading) {
     return <p>Loading...</p>;
@@ -131,19 +160,23 @@ const ProductPage = () => {
           <p className="my-3 md:my-auto text-justify text-gray-800">
             {currentProduct.Description}
           </p>
+          <p className="my-3 md:my-auto text-justify text-gray-400">
+            {currentProduct.provider}
+          </p>
           <div className="flex items-start my-2">
             <span className="flex items-end mx-0">
               <StarRating rating={currentProduct.Ratings} />
               <span className="text-gray-500 text-sm">&nbsp; 214</span>
             </span>
           </div>
+          <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
           <Button
-            onClick={() => addToCartHandler(currentProduct.slug)}
+            onClick={handlePayment}
             variant="primary"
             className="mt-9 uppercase w-[60%] text-xl py-4 h-12"
-            disabled={!getCookie("useEmail")}
+            disabled={isUserLoggedIn || isProcessing}
           >
-            Add To Cart
+            {isProcessing ? "Processing" : "Rent Now"}
           </Button>
         </div>
         <div className="hidden md:block w-[50%]">

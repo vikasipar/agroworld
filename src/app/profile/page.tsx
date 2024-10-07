@@ -48,7 +48,7 @@ function ProfilePage() {
           <nav className="w-full md:w-1/4 border-r-2 border-gray-300 md:border-r-0 md:border-b-2 md:border-b-gray-300">
             <div className="flex flex-col gap-y-4 my-6 text-lg border-r-2 border-stone-300 p-7 h-full">
               <span className="py-2 px-4 text-center cursor-pointer transition-all duration-300 flex items-center gap-x-2">
-                <MdFormatListBulleted /> My Orders
+                <MdFormatListBulleted /> Orders status
               </span>
             </div>
           </nav>

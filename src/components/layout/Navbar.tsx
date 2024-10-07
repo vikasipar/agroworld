@@ -64,17 +64,29 @@ const Navbar = () => {
       </div>
       <div className="w-1/2">
         <ul className="w-full flex justify-between items-center text-lg">
-          <li className={`${pathname === "/" ? "border-b-2 border-green-600" : ""}`}>
+          <li
+            className={`${
+              pathname === "/" ? "border-b-2 border-green-600" : ""
+            }`}
+          >
             <a href="/" className="w-fit">
               Home
             </a>
           </li>
-          <li className={`${pathname === "/equipments" ? "border-b-2 border-green-600" : ""}`}>
+          <li
+            className={`${
+              pathname === "/equipments" ? "border-b-2 border-green-600" : ""
+            }`}
+          >
             <a href="/equipments" className="w-fit">
               Equipments
             </a>
           </li>
-          <li className={`${pathname === "/articles" ? "border-b-2 border-green-600" : ""}`}>
+          <li
+            className={`${
+              pathname === "/articles" ? "border-b-2 border-green-600" : ""
+            }`}
+          >
             <a href="/articles" className="w-fit">
               Articles
             </a>
@@ -84,25 +96,33 @@ const Navbar = () => {
               {userData?.role === "user" ? (
                 <a
                   href="/profile"
-                  className={`${pathname === "/profile" ? "border-b-2 border-green-600" : ""} w-fit flex items-center gap-x-2`}
+                  className={`${
+                    pathname === "/profile" ? "border-b-2 border-green-600" : ""
+                  } w-fit flex items-center gap-x-2`}
                 >
                   Profile
                 </a>
               ) : (
                 <a
                   href="/dashboard"
-                  className={`${pathname === "/dashboard" ? "border-b-2 border-green-600" : ""} w-fit flex items-center gap-x-2`}
+                  className={`${
+                    pathname === "/dashboard"
+                      ? "border-b-2 border-green-600"
+                      : ""
+                  } w-fit flex items-center gap-x-2`}
                 >
                   Dashboard
                 </a>
               )}
             </li>
           )}
-          <li className="bg-green-600 text-white p-2 rounded-full">
-            <a href="/cart" className="w-fit">
-              <PiShoppingCartSimpleFill className="text-xl" />
-            </a>
-          </li>
+          {/* {user && (
+            <li className="bg-green-600 text-white p-2 rounded-full">
+              <a href="/cart" className="w-fit">
+                <PiShoppingCartSimpleFill className="text-xl" />
+              </a>
+            </li>
+          )} */}
           <li>
             {user ? (
               <Button onClick={handleLogout} variant={"primary"}>

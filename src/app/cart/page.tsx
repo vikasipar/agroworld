@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useState, useEffect } from "react";
 import { getProductBySlug } from "@/actions/getProduct";
 import { IProduct } from "@/types/modelTypes";
@@ -7,6 +7,7 @@ import CartItem from "@/components/cart/CartItem";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { usePayment } from "@/hooks/usePayment";
 
 interface Item {
   productId: string;
@@ -14,6 +15,8 @@ interface Item {
 }
 
 const CartPage = () => {
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [isPaymentDone, setIsPaymentDone] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [productData, setProductData] = useState<
@@ -25,6 +28,8 @@ const CartPage = () => {
 
   const router = useRouter();
   const userId: string | null = getCookie("userId");
+  const userEmail: string | null = getCookie("userEmail");
+  const userName: string | null = getCookie("userName");
 
   // Fetch products only when not cached
   const fetchProducts = async (cartItems: Item[]) => {
@@ -132,6 +137,13 @@ const CartPage = () => {
     router.push("/equipments");
   };
 
+  // Handle payment
+  const handlePayment = () => {
+    if (userEmail && userName) {
+      usePayment(userEmail, userName, setIsProcessing, setIsPaymentDone);
+    }
+  };
+
   if (!getCookie("userEmail")) {
     router.push("/auth/login");
   }
@@ -159,23 +171,25 @@ const CartPage = () => {
               />
             ))}
           </div>
-          <button className="border-2 w-[42%] shadow-2xl drop-shadow-lg mx-auto mt-9 py-3 uppercase bg-[#ffbf00] hover:bg-[#ffa500] text-stone-900 rounded-md text-sm font-semibold">
-            Proceed to Checkout
-          </button>
+          <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+          <div className="mx-auto flex flex-col items-center justify-center">
+            <Button
+              onClick={handlePayment}
+              disabled={isProcessing}
+              className={`w-[400px] mt-8 py-2 bg-[#ffbf00] hover:bg-[#ffa500] text-stone-900 font-semibold ${
+                isProcessing ? "opacity-60" : "opacity-100"
+              }`}
+            >
+              {isProcessing ? "Processing" : "Proceed to Payment"}
+            </Button>
+          </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center w-fit mx-auto mb-40">
-          <MdRemoveShoppingCart className="text-4xl" />
-          <h3 className="text-3xl my-4">
-            Cart Is <span className="text-orange-600">Empty!</span>
-          </h3>
-          <p>Must add items to the cart before you proceed to checkout.</p>
-          <Button
-            variant="primary"
-            className="w-[80%] mt-9 font-semibold"
-            onClick={redirectToEquipments}
-          >
-            Return to shop
+        <div className="flex w-full flex-col items-center justify-center mt-20">
+          <MdRemoveShoppingCart size={56} />
+          <p className="text-sm md:text-base">No items found in cart.</p>
+          <Button className="text-sm mt-4" onClick={redirectToEquipments}>
+            Explore Products
           </Button>
         </div>
       )}
