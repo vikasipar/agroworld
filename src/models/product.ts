@@ -9,7 +9,7 @@ const ProductSchema: Schema = new Schema({
   Brand: { type: String },
   Price: { type: String, required: true },
   Location: { type: String, required: true },
-  Availability: { type: String, required: true },
+  Available: { type: Boolean, default: true },
   // Condition: { type: String },
   Specifications: {
     Power: { type: String },

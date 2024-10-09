@@ -4,14 +4,14 @@ import { useParams } from "next/navigation";
 import StarRating from "@/components/products/StarRating";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import ProductCard from "@/components/products/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "@/actions/getProduct";
-import { IProduct } from "@/types/modelTypes";
-import { CgUnavailable } from "react-icons/cg";
+import { IProduct, IRequest } from "@/types/modelTypes";
 import { getCookie } from "@/hooks/useCookies";
 import { toast } from "sonner";
 import { usePayment } from "@/hooks/usePayment";
+import RelatedProducts from "@/components/products/RelatedProducts";
+import ProductDetails from "@/components/products/ProductDetails";
 
 const ProductPage = () => {
   const { product: productSlug } = useParams(); // Get the product slug from the URL
@@ -20,12 +20,7 @@ const ProductPage = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [isPaymentDone, setIsPaymentDone] = useState<boolean>(false);
-  // Fetch the product data by slug
-  // const { isLoading, isError, data, error } = useQuery<IProduct>({
-  //   queryKey: ["product", product],
-  //   queryFn: () => getProductBySlug(product),
-  //   enabled: !!product,
-  // });
+  const userId: string | null = getCookie("userId");
 
   useEffect(() => {
     const userEmail: any = getCookie("useEmail");
@@ -52,81 +47,71 @@ const ProductPage = () => {
       setCurrentProduct(product || null);
 
       // Group products from the same category as related products, excluding the current product
-      const related = data.filter(
-        (p) => p.Category === product?.Category && p.slug !== productSlug
-      );
-      setRelatedProducts(related);
+      if (product) {
+        const related = data.filter(
+          (p) =>
+            p.provider !== userId && // Exclude products from the same provider
+            p.Category === product.Category && // Match category
+            p.slug !== productSlug && // Exclude the current product
+            p.Available // Only include available products
+        );
+        setRelatedProducts(related);
+      }
     }
-  }, [data, productSlug]);
-
-  // const addToCartHandler = async (product: any) => {
-  //   // Add product to the cart logic here
-  //   // console.log("Product added", product._id);
-  //   const paylload = {
-  //     productId: product.slug,
-  //     quantity: 1,
-  //   }
-  //   try {
-  //     const userId = getCookie("userId");
-  //     const response = await fetch(`/api/cart/${userId}`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(paylload),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Failed to submit product data");
-  //     }
-
-  //     const result = await response.json();
-  //     //   console.log("Product data submitted successfully:", result);
-  //     toast("Product added to cart!");
-  //   } catch (error) {
-  //     console.error("Error submitting product data:", error);
-  //   }
-  // };
-
-  const addToCartHandler = (productId: string) => {
-    // Get the existing cart from localStorage or initialize an empty array if not found
-    const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
-
-    // Find if the product is already in the cart
-    const existingProduct = cartItems.find(
-      (item: any) => item.productId === productId
-    );
-
-    if (existingProduct) {
-      // If the product exists, increase the quantity
-      existingProduct.quantity += 1;
-    } else {
-      // If the product doesn't exist, add it with quantity 1
-      cartItems.push({ productId, quantity: 1 });
-    }
-
-    // Save the updated cart back to localStorage
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
-    toast("Product added to cart!");
-    // console.log('Cart updated:', cartItems);
-  };
+  }, [data, productSlug, userId]); // Include userId in the dependency array
 
   // Handle payment
   const handlePayment = () => {
     const userEmail: any = getCookie("useEmail");
     const userName: any = getCookie("userName");
-    // if (userEmail) {
+    // if (isUserLoggedIn) {
       usePayment(userEmail, userName, setIsProcessing, setIsPaymentDone);
-    // } 
+    // }
+    // }else return;
   };
 
-  // set request to provider after payment
+  // send request to provider after payment
   useEffect(() => {
-    if(isPaymentDone){
-      
-    }
-  }, [isPaymentDone]);
+    const sendRequest = async () => {
+      // Ensure currentProduct and user information exist before sending the request
+      const userEmail = getCookie("userEmail"); // Ensure this is spelled correctly
+      const userName = getCookie("userName");
+
+      if (isPaymentDone && currentProduct && userId && userEmail && userName) {
+        const payload: IRequest = {
+          senderId: userId,
+          senderName: userName,
+          senderEmail: userEmail,
+          providerId: currentProduct.provider || "", // Use empty string fallback if undefined
+          requestAccepted: false,
+          productId: currentProduct._id || "", // Ensure _id is defined
+          productSlug: currentProduct.slug || "", // Ensure slug is defined
+        };
+
+        try {
+          const response = await fetch("/api/request", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to submit request");
+          }
+
+          const result = await response.json();
+          toast.success("Request sent successfully!");
+        } catch (error) {
+          console.error("Error submitting request data:", error);
+          toast.error("Error sending request.");
+        }
+      }
+    };
+
+    sendRequest();
+  }, [isPaymentDone, currentProduct, userId]); // Make sure to include necessary dependencies
 
   // Loading or error handling
   if (isLoading) {
@@ -190,76 +175,8 @@ const ProductPage = () => {
           />
         </div>
       </div>
-
-      <h3 className="mx-20 font-semibold text-2xl">About this item:</h3>
-      <table className="my-8 w-fit mx-auto mb-12 text-lg" border={1}>
-        <tbody>
-          <tr>
-            <td>Condition:</td>
-            <td>{currentProduct.Condition}</td>
-          </tr>
-          {currentProduct.Specifications.Power && (
-            <tr>
-              <td>Power:</td>
-              <td>{currentProduct.Specifications.Power}</td>
-            </tr>
-          )}
-          {currentProduct.Specifications.FuelType && (
-            <tr>
-              <td>Fuel Type:</td>
-              <td>{currentProduct.Specifications?.FuelType}</td>
-            </tr>
-          )}
-          <tr>
-            <td>Accessories:</td>
-            <td>{currentProduct.Accessories}</td>
-          </tr>
-          <tr>
-            <td>Rental Terms:</td>
-            <td>{currentProduct.RentalTerms}</td>
-          </tr>
-          <tr>
-            <td>Delivery Options:</td>
-            <td>{currentProduct.DeliveryOptions}</td>
-          </tr>
-          <tr>
-            <td>Service:</td>
-            <td>{currentProduct.Service}</td>
-          </tr>
-          <tr>
-            <td>Usage Instructions:</td>
-            <td>{currentProduct.UsageInstructions}</td>
-          </tr>
-          <tr>
-            <td>Contact:</td>
-            <td>{currentProduct.ContactInformation}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h3 className="mx-20 font-semibold text-2xl">Related equipment:</h3>
-      <div className="w-full">
-        <div className="flex flex-wrap items-center justify-start w-[90%] mx-auto gap-4 mt-4 mb-20">
-          {relatedProducts.length === 0 ? (
-            <p className="text-lg flex items-center space-x-1">
-              <CgUnavailable className="text-2xl text-orange-600" />
-              <span className="text-yellow-500">
-                No related products found.{" "}
-                <a
-                  href="/equipments"
-                  className="text-blue-700 underline font-normal"
-                >
-                  Show all Equipments.
-                </a>
-              </span>
-            </p>
-          ) : (
-            relatedProducts.map((similarProduct, index) => (
-              <ProductCard key={index} product={similarProduct} />
-            ))
-          )}
-        </div>
-      </div>
+      <ProductDetails currentProduct={currentProduct} />
+      <RelatedProducts relatedProducts={relatedProducts} />
     </>
   );
 };

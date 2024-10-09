@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getCookie } from "@/hooks/useCookies";
 import { IProduct } from "@/types/modelTypes";
 import { useRouter } from "next/navigation";
-import ProductCard from "./ProductCard";
+import ProductCard from "@/components/products/ProductCard";
 
 const MyProducts = () => {
   const router = useRouter();

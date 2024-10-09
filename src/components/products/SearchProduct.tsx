@@ -6,10 +6,11 @@ import { getAllProducts } from "@/actions/getProduct";
 import { IProduct } from "@/types/modelTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "@/hooks/useDebounce";
+import { getCookie } from "@/hooks/useCookies";
 
 const SearchProduct = () => {
   const [searchQuery, setSearchQuery] = useState("");
-
+  const userId = getCookie("userId");
   // Debounce the search query to avoid triggering a search on every keystroke
   const debouncedSearchQuery = useDebounce(searchQuery, 2000);
 
@@ -21,6 +22,7 @@ const SearchProduct = () => {
   });
 
   // Memoize filtered products to optimize performance
+  // const filteredProducts = useMemo(() => {
   const filteredProducts = useMemo(() => {
     if (!data) return [];
 
@@ -28,9 +30,11 @@ const SearchProduct = () => {
 
     return data.filter(
       (product: IProduct) =>
-        product.EquipmentName.toLowerCase().includes(lowercasedQuery) ||
-        product.Category.toLowerCase().includes(lowercasedQuery) ||
-        product.Brand.toLowerCase().includes(lowercasedQuery)
+        product.provider !== userId &&
+        product.Available &&
+        (product.EquipmentName.toLowerCase().includes(lowercasedQuery) ||
+          product.Category.toLowerCase().includes(lowercasedQuery) ||
+          product.Brand.toLowerCase().includes(lowercasedQuery))
     );
   }, [data, debouncedSearchQuery]);
 

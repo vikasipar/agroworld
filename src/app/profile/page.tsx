@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import { MdFormatListBulleted } from "react-icons/md";
 import { getCookie } from "@/hooks/useCookies";
-import MyOrders from "@/components/products/MyOrders";
+import MyOrders from "@/components/profile/MyOrders";
 
 function ProfilePage() {
   const [user, setUser] = useState<any>(null);
@@ -11,31 +11,37 @@ function ProfilePage() {
 
   const loggedIn = getCookie("userEmail");
 
+  // Move all useEffects outside of conditional checks
   useEffect(() => {
-    // const userData = localStorage.getItem("userData");
-
     if (loggedIn) {
-      if(getCookie('userRole')!=='user'){
-        router.push("/");
+      const userRole = getCookie("userRole");
+      if (userRole !== "user") {
+        router.push("/"); // Redirect if not a user
+      } else {
+        // Set user details if logged in
+        setUser({
+          name: getCookie("userName"),
+          email: getCookie("userEmail"),
+          role: userRole,
+        });
       }
-      setUser({
-        name: getCookie("userName"),
-        email: getCookie("userEmail"),
-        role: getCookie("userRole"),
-      });
     } else {
-      // Redirect to the login page if userData is not present
-      router.push("/auth/login"); // Update to your actual login route
+      // Redirect to login if not logged in
+      router.push("/auth/login");
     }
   }, [loggedIn, router]);
 
+  const userEmail = getCookie("userEmail");
+
+  useEffect(() => {
+    if (!userEmail) {
+      router.push("/auth/login");
+    }
+  }, [userEmail, router]);
+
   // Prevent rendering of the profile page until user is verified
   if (!user) {
-    return null;
-  }
-
-  if(!getCookie("userEmail")){
-    router.push('auth/login');
+    return null; // Return null or a loading spinner here
   }
 
   return (

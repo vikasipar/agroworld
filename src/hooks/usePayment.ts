@@ -60,5 +60,7 @@ export const usePayment = async (
     console.error("Payment failed: ", error);
   } finally {
     setIsProcessing(false);
+    // for testing
+    // setIsPaymentDone(true);
   }
 };

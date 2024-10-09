@@ -14,13 +14,14 @@ export interface IUser {
 }
 
 export interface IProduct {
+  _id?: string;
   EquipmentName: string;
   Category: string;
   Description: string;
   Brand: string;
   Price: string;
   Location: string;
-  Availability: string;
+  Available: boolean;
   Condition: string;
   Specifications: {
     Power: string;
@@ -48,4 +49,15 @@ export interface CartProducts {
 export interface ICart {
   userId: string;
   products: CartProducts[];
+}
+
+export interface IRequest {
+  _id?: string;
+  senderId: string;
+  senderName: string;
+  senderEmail: string;
+  providerId: string;
+  requestAccepted: boolean;
+  productId: string;
+  productSlug: string;
 }

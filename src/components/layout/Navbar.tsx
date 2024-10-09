@@ -1,27 +1,34 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/firebase.config";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { signOut } from "firebase/auth";
 import { setCookie, getCookie, deleteCookie } from "@/hooks/useCookies";
 import Weather from "./Weather";
-import { FaCircleUser } from "react-icons/fa6";
 import { IUser } from "@/types/modelTypes";
-import { PiShoppingCartSimpleFill } from "react-icons/pi";
+import { IoMdNotifications } from "react-icons/io";
 
-const Navbar = () => {
+const Navbar = React.memo(() => {
   const [user] = useAuthState(auth);
   const router = useRouter();
-  const pathname = usePathname(); // Use usePathname to get the current route
-  const [userData, setUserData] = useState<IUser>();
+  const [userData, setUserData] = useState<IUser | null>(null);
+  const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
+  const [userRole, setUserRole] = useState<string | null>(
+    getCookie("userRole")
+  );
 
+  // Initialize userLoggedIn based on cookie presence
   useEffect(() => {
-    if (typeof window !== "undefined" && user?.email) {
-      setCookie("userEmail", user.email, 7); // Store email in cookie for 7 days
+    const emailFromCookie = getCookie("userEmail");
+    if (emailFromCookie) {
+      setUserLoggedIn(true); // Set userLoggedIn to true if userEmail cookie is present
     }
+  }, []);
 
+  // Fetch user data if user is logged in
+  useEffect(() => {
     const fetchUserData = async () => {
       const userEmail = getCookie("userEmail");
       if (userEmail) {
@@ -33,6 +40,7 @@ const Navbar = () => {
             setCookie("userName", data.user.name, 7);
             setCookie("userRole", data.user.role, 7);
             setCookie("userId", data.user._id, 7);
+            setUserRole(data.user.role); // Set userRole from fetched data
           } else {
             console.error("Error fetching user:", data.error);
           }
@@ -42,102 +50,147 @@ const Navbar = () => {
       }
     };
 
-    fetchUserData();
+    if (user) {
+      fetchUserData();
+    }
   }, [user]);
 
-  const handleSignup = () => {
+  const handleSignup = useCallback(() => {
     router.push("/auth/login");
-  };
+  }, [router]);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     signOut(auth);
     deleteCookie("userEmail");
     deleteCookie("userName");
     deleteCookie("userRole");
     deleteCookie("userId");
-  };
+    setUserLoggedIn(false); // Reset userLoggedIn after logout
+    setUserRole(null); // Reset userRole after logout
+    router.push("/"); // Redirect to homepage after logout
+  }, [router]);
 
-  return (
-    <div className="flex items-start justify-between py-4 px-9">
-      <div>
-        <Weather />
-      </div>
-      <div className="w-1/2">
-        <ul className="w-full flex justify-between items-center text-lg">
-          <li
-            className={`${
-              pathname === "/" ? "border-b-2 border-green-600" : ""
-            }`}
-          >
-            <a href="/" className="w-fit">
-              Home
-            </a>
-          </li>
-          <li
-            className={`${
-              pathname === "/equipments" ? "border-b-2 border-green-600" : ""
-            }`}
-          >
-            <a href="/equipments" className="w-fit">
-              Equipments
-            </a>
-          </li>
-          <li
-            className={`${
-              pathname === "/articles" ? "border-b-2 border-green-600" : ""
-            }`}
-          >
-            <a href="/articles" className="w-fit">
-              Articles
-            </a>
-          </li>
-          {user && (
+  // Memoize the Navbar content so it only re-renders when userLoggedIn or userRole changes
+  const navbarContent = useMemo(() => {
+    if (userLoggedIn) {
+      if (userRole === "user") {
+        return (
+          <div className="flex items-start justify-between py-4 px-9">
+            <div>
+              <Weather />
+            </div>
+            <div className="w-1/2">
+              <ul className="w-full flex justify-between items-center text-lg">
+                <li>
+                  <a href="/" className="w-fit">
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a href="/equipments" className="w-fit">
+                    Equipments
+                  </a>
+                </li>
+                <li>
+                  <a href="/articles" className="w-fit">
+                    Articles
+                  </a>
+                </li>
+                <li>
+                  <a href="/profile" className="text-3xl text-green-600 flex">
+                    <IoMdNotifications />
+                    <span className="h-3 w-3 -ml-3 bg-red-500 rounded-full mt-1"></span>
+                  </a>
+                </li>
+                <li>
+                  <Button onClick={handleLogout} variant={"primary"}>
+                    Logout
+                  </Button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        );
+      } else if (userRole === "provider") {
+        return (
+          <div className="flex items-start justify-between py-4 px-9">
+            <div>
+              <Weather />
+            </div>
+            <div className="w-1/2">
+              <ul className="w-full flex justify-between items-center text-lg">
+                <li>
+                  <a href="/" className="w-fit">
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a href="/equipments" className="w-fit">
+                    Equipments
+                  </a>
+                </li>
+                <li>
+                  <a href="/articles" className="w-fit">
+                    Articles
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/dashboard"
+                    className="w-fit flex items-center gap-x-2"
+                  >
+                    Dashboard
+                  </a>
+                </li>
+                <li>
+                  <Button onClick={handleLogout} variant={"primary"}>
+                    Logout
+                  </Button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        );
+      }
+    }
+
+    // If not logged in
+    return (
+      <div className="flex items-start justify-between py-4 px-9">
+        <div>
+          <Weather />
+        </div>
+        <div className="w-1/2">
+          <ul className="w-full flex justify-between items-center text-lg">
             <li>
-              {userData?.role === "user" ? (
-                <a
-                  href="/profile"
-                  className={`${
-                    pathname === "/profile" ? "border-b-2 border-green-600" : ""
-                  } w-fit flex items-center gap-x-2`}
-                >
-                  Profile
-                </a>
-              ) : (
-                <a
-                  href="/dashboard"
-                  className={`${
-                    pathname === "/dashboard"
-                      ? "border-b-2 border-green-600"
-                      : ""
-                  } w-fit flex items-center gap-x-2`}
-                >
-                  Dashboard
-                </a>
-              )}
-            </li>
-          )}
-          {/* {user && (
-            <li className="bg-green-600 text-white p-2 rounded-full">
-              <a href="/cart" className="w-fit">
-                <PiShoppingCartSimpleFill className="text-xl" />
+              <a href="/" className="w-fit">
+                Home
               </a>
             </li>
-          )} */}
-          <li>
-            {user ? (
-              <Button onClick={handleLogout} variant={"primary"}>
-                Logout
-              </Button>
-            ) : (
+            <li>
+              <a href="/equipments" className="w-fit">
+                Equipments
+              </a>
+            </li>
+            <li>
+              <a href="/articles" className="w-fit">
+                Articles
+              </a>
+            </li>
+            <li>
               <Button onClick={handleSignup} variant={"primary"}>
                 Login
               </Button>
-            )}
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }, [userLoggedIn, userRole, handleLogout, handleSignup]);
+
+  return <>{navbarContent}</>;
+});
+
+Navbar.displayName = "Navbar";
 
 export default Navbar;
