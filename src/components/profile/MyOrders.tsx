@@ -9,7 +9,7 @@ const MyOrders = () => {
   const userId = getCookie("userId");
 
   // Fetch requests by user ID
-  const { isLoading, isError, data, error } = useQuery<IRequest[]>({
+  const { isLoading, isError, data, error } = useQuery<any>({
     queryKey: ["userRequests", userId],
     queryFn: () => getRequestsByUserId(userId),
     enabled: !!userId, // Enable only if userId exists
@@ -35,7 +35,7 @@ const MyOrders = () => {
     return (
       <div className="w-full h-[50vh] flex flex-col justify-center items-center gap-y-8">
         <TbAlertTriangle className="text-6xl text-yellow-300" />
-        <p className="text-xl font-semibold text-stone-500">
+        <p className="text-base md:text-xl font-semibold text-stone-500">
           You haven't placed any requests yet!
         </p>
       </div>
@@ -44,7 +44,7 @@ const MyOrders = () => {
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border border-gray-200">
+      <table className="min-w-full bg-white border border-gray-200 text-xs md:text-base">
         <thead>
           <tr className="bg-gray-100 border-b">
             <th className="py-2 px-4 text-left">Sr. No.</th>

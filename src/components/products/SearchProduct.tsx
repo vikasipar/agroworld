@@ -55,15 +55,15 @@ const SearchProduct = () => {
   return (
     <div>
       <div className="h-[160px] w-full flex items-center justify-center">
-        <div className="w-[40%] border-[1px] border-green-600 outline-none rounded-lg px-4 py-1 flex items-center justify-around">
+        <div className="w-[80%] md:w-[40%] border-[1px] border-green-600 outline-none rounded-lg px-4 py-1 flex items-center justify-around">
           <input
             type="text"
-            className="w-[94%] border-0 outline-none px-4 py-1"
+            className="w-[90%] md:w-[94%] border-0 outline-none px-4 py-1"
             placeholder="Search equipments"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <IoSearchOutline className="text-2xl text-green-500" />
+          <IoSearchOutline className="text-xl md:text-2xl text-green-500" />
         </div>
       </div>
 
@@ -81,7 +81,7 @@ const SearchProduct = () => {
             ))}
           </div>
         ) : (
-          <p className="text-center text-2xl mt-8 text-stone-600">
+          <p className="text-center text-lg md:text-2xl mt-8 text-stone-600">
             No results found
           </p>
         )}

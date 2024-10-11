@@ -38,23 +38,25 @@ function Articles() {
   ];
 
   return (
-    <div>
-      <h2 className="text-3xl font-semibold text-green-500 mb-4">Articles</h2>
-      <Carousel className="w-[96%] mx-auto my-9">
-        <CarouselContent className="space-x-10">
+    <div className="p-4">
+      <h2 className="text-xl md:text-3xl font-semibold text-green-500 mb-4">Articles</h2>
+      <Carousel className="w-[90%] md:w-[96%] mx-auto my-4 md:my-9">
+        <CarouselContent className="space-x-4 md:space-x-10">
           {topics.map((topic: any) => (
-            <CarouselItem className="basis-1/4" key={topic.name}>
+            <CarouselItem className="md:basis-1/4" key={topic.name}>
               <TopicCard topic={topic} />
             </CarouselItem>
           ))}
         </CarouselContent>
 
-        {topics.length > 4 && (
-          <>
-            <CarouselPrevious />
-            <CarouselNext />
-          </>
-        )}
+        <span
+          className={`${topics.length > 1 ? "block" : "hidden"} md:${
+            topics.length > 4 ? "block" : "hidden"
+          }`}
+        >
+          <CarouselPrevious />
+          <CarouselNext />
+        </span>
       </Carousel>
     </div>
   );

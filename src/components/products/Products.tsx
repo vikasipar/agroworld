@@ -13,7 +13,7 @@ import {
 import { getCookie } from "@/hooks/useCookies";
 
 // Dynamically import ProductCard for code splitting
-const ProductCard = dynamic(() => import("./ProductCard"));
+const ProductCard = dynamic(() => import("./ProductCard"), { ssr: false });
 
 const Products = () => {
   const userId: string | null = getCookie("userId");
@@ -23,7 +23,6 @@ const Products = () => {
     queryKey: ["products"],
     queryFn: getAllProducts,
     staleTime: 30 * 60 * 1000, // Cache data for 30 minutes
-    cacheTime: 60 * 60 * 1000, // Keep data in cache for 60 minutes even if inactive
     refetchOnWindowFocus: false, // Disable refetching when the window regains focus for performance
     refetchOnMount: false, // Disable refetching when component remounts if data is fresh
   });
@@ -36,49 +35,52 @@ const Products = () => {
   if (isError) {
     return (
       <p className="text-center text-red-600">
-        Error loading products: {error instanceof Error ? error.message : "Unknown error"}
+        Error loading products:{" "}
+        {error instanceof Error ? error.message : "Unknown error"}
       </p>
     );
   }
 
   // Group products by category
-  const productsByCategory = data?.reduce((acc:any, product:any) => {
+  const productsByCategory = Array.isArray(data) ? data.reduce((acc: any, product: IProduct) => {
     if (!acc[product.Category]) {
       acc[product.Category] = [];
     }
     acc[product.Category].push(product);
     return acc;
-  }, {} as Record<string, IProduct[]>);
+  }, {} as Record<string, IProduct[]>) : {};
 
   return (
     <div className="p-4">
       {productsByCategory && Object.keys(productsByCategory).length > 0 ? (
         Object.keys(productsByCategory).map((category) => {
           const filteredProducts = productsByCategory[category].filter(
-            (prod:IProduct) => prod.Available && prod.provider !== userId
+            (prod: IProduct) => prod.Available && prod.provider !== userId
           );
 
           return filteredProducts.length > 0 ? (
-            <div key={category} className="mb-8">
-              <h2 className="text-3xl font-semibold text-green-500 mb-4">
+            <div key={category} className="mb-4 md:mb-8">
+              <h2 className="text-xl md:text-3xl font-semibold text-green-500 mb-4">
                 {category.replace(/-/g, " ")}
               </h2>
-              <div className="flex items-center justify-start">
-                <Carousel className="w-[96%] mx-auto my-9">
+              <div className="flex items-center justify-center md:justify-start w-[94%] mx-auto">
+                <Carousel className="w-full md:w-[96%] mx-auto my-4 md:my-9">
                   <CarouselContent className="space-x-10">
-                    {filteredProducts.map((product:IProduct) => (
-                      <CarouselItem className="basis-1/4" key={product.slug}>
+                    {filteredProducts.map((product: IProduct) => (
+                      <CarouselItem className="md:basis-1/4" key={product.slug}>
                         <ProductCard product={product} />
                       </CarouselItem>
                     ))}
                   </CarouselContent>
 
-                  {filteredProducts.length > 4 && (
-                    <>
-                      <CarouselPrevious />
-                      <CarouselNext />
-                    </>
-                  )}
+                  <span
+                    className={`${
+                      filteredProducts.length > 1 ? "block" : "hidden"
+                    } md:${filteredProducts.length > 4 ? "block" : "hidden"}`}
+                  >
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </span>
                 </Carousel>
               </div>
             </div>

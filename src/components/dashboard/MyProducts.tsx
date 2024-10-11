@@ -45,14 +45,14 @@ const MyProducts = () => {
   return (
     <div className="w-full min-h-screen">
       {myProducts && myProducts.length === 0 ? (
-        <div className="w-full h-[50vh] flex flex-col justify-center items-center gap-y-8">
+        <div className="w-full h-[50vh] flex flex-col justify-center items-center gap-y-2 md:gap-y-8">
           <TbAlertTriangle className="text-6xl text-yellow-300" />
-          <p className="text-xl font-semibold text-stone-500">
+          <p className="text-base md:text-xl font-semibold text-stone-500">
             You haven't added any products yet!
           </p>
         </div>
       ) : (
-        <div className="flex flex-wrap items-center justify-start gap-4">
+        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
           {myProducts?.map((product: IProduct) => (
             <ProductCard key={product.slug} product={product} />
           ))}

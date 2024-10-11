@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/firebase.config";
-import { getCookie } from "@/hooks/useCookies";
+import { getCookie, setCookie } from "@/hooks/useCookies";
 
 const SigninPage = () => {
   const [email, setEmail] = useState("");
@@ -38,6 +38,7 @@ const SigninPage = () => {
 
       if (res) {
         console.log("User signed in successfully:", res.user);
+        setCookie('userEmail', email, 7);
         setEmail("");
         setPassword("");
         router.push("/");
@@ -57,8 +58,8 @@ const SigninPage = () => {
   }, []);
 
   return (
-    <section className="flex items-center justify-center min-h-screen bg-gray-50 p-6">
-      <Card className="w-full max-w-md shadow-lg">
+    <section className="flex items-center justify-center h-[80dvh] lg:min-h-screen bg-gray-50 p-6">
+      <Card className="w-full max-w-md md:shadow-lg">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold text-green-500">
             Sign In

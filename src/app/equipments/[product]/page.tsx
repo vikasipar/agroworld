@@ -65,7 +65,7 @@ const ProductPage = () => {
     const userEmail: any = getCookie("useEmail");
     const userName: any = getCookie("userName");
     // if (isUserLoggedIn) {
-      usePayment(userEmail, userName, setIsProcessing, setIsPaymentDone);
+    usePayment(userEmail, userName, setIsProcessing, setIsPaymentDone);
     // }
     // }else return;
   };
@@ -128,21 +128,21 @@ const ProductPage = () => {
 
   return (
     <>
-      <div className="md:flex flex-row-reverse h-[90vh] w-[90%] md:w-[85%] my-auto mx-auto items-center">
-        <div className="md:w-[50%] text-left ml-4">
+      <div className="flex flex-col-reverse md:flex-row-reverse md:h-[90vh] w-[90%] md:w-[85%] my-auto mx-auto items-center">
+        <div className="w-full md:w-[50%] text-left ml-4">
           <h1 className="text-2xl md:text-[2.4rem] text-gray-900 font-extrabold leading-tight">
             {currentProduct.EquipmentName}
           </h1>
-          <p className="text-xl font-light text-red-600">
+          <p className="text-sm md:text-xl font-light text-red-600">
             {currentProduct.Brand}
           </p>
-          <h3 className="text-[1.5rem] uppercase font-bold text-gray-900">
+          <h3 className="text-lg md:text-[1.5rem] uppercase font-bold text-gray-900">
             ₹ {currentProduct.Price}
           </h3>
-          <p className="md:text-xl uppercase font-bold text-green-600 my-2">
+          <p className="text-base md:text-xl uppercase font-bold text-green-600 my-2">
             {currentProduct.Category.replace(/-/g, " ")}
           </p>
-          <p className="my-3 md:my-auto text-justify text-gray-800">
+          <p className="text-sm md:text-lg my-3 md:my-auto text-justify text-gray-800">
             {currentProduct.Description}
           </p>
           <p className="my-3 md:my-auto text-justify text-gray-400">
@@ -158,13 +158,13 @@ const ProductPage = () => {
           <Button
             onClick={handlePayment}
             variant="primary"
-            className="mt-9 uppercase w-[60%] text-xl py-4 h-12"
+            className="my-9 md:mt-9 uppercase w-[60%] text-base md:text-xl py-2 md:py-4 h-10 md:h-12"
             disabled={isUserLoggedIn || isProcessing}
           >
             {isProcessing ? "Processing" : "Rent Now"}
           </Button>
         </div>
-        <div className="hidden md:block w-[50%]">
+        <div className="w-[90%] mx-auto my-4 md:my-auto md:w-[50%]">
           <Image
             src={currentProduct.url}
             alt={currentProduct.EquipmentName}

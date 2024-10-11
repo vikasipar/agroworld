@@ -114,7 +114,7 @@ const ProductForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 w-[60%] mx-auto">
+    <form onSubmit={handleSubmit} className="space-y-2 md:space-y-4 w-full md:w-[60%] mx-auto text-sm md:text-base">
       <input
         type="text"
         name="EquipmentName"
@@ -122,7 +122,7 @@ const ProductForm = () => {
         value={formData.EquipmentName}
         onChange={handleChange}
         required
-        className="w-full p-2 border border-gray-300 rounded"
+        className="w-full p-1 md:p-2 border border-gray-300 rounded"
       />
       <input
         type="text"

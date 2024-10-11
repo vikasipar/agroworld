@@ -28,12 +28,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             loading="lazy"
             className="object-cover border-b-[1px] border-stone-300 p-3 w-[320px] h-[280px] aspect-video overflow-hidden m-0"
           />
-          <CardTitle className="mt-4 text-lg font-semibold">
+          <CardTitle className="mt-4 text-base md:text-lg font-semibold">
             {product.EquipmentName}
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-gray-500 text-center w-full -my-4">
+          <p className="text-xs md:text-sm text-gray-500 text-center w-full -my-4">
             {product.Category.replace(/-/g, ' ')}
           </p>
         </CardContent>

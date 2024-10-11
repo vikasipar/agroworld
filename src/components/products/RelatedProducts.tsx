@@ -5,9 +5,9 @@ import { CgUnavailable } from "react-icons/cg";
 function RelatedProducts({ relatedProducts }: any) {
   return (
     <div>
-      <h3 className="mx-20 font-semibold text-2xl">Related equipment:</h3>
+      <h3 className="mx-4 md:mx-20 font-semibold text-xl md:text-2xl">Related equipment:</h3>
       <div className="w-full">
-        <div className="flex flex-wrap items-center justify-start w-[90%] mx-auto gap-4 mt-4 mb-20">
+        <div className="flex flex-wrap items-center justify-center md:justify-start w-[90%] mx-auto gap-4 mt-4 mb-20">
           {relatedProducts.length === 0 ? (
             <p className="text-lg flex items-center space-x-1">
               <CgUnavailable className="text-2xl text-orange-600" />

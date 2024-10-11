@@ -3,8 +3,8 @@ import React from "react";
 function ProductDetails({ currentProduct }: any) {
   return (
     <div>
-      <h3 className="mx-20 font-semibold text-2xl">About this item:</h3>
-      <table className="my-8 w-fit mx-auto mb-12 text-lg" border={1}>
+      <h3 className="mx-4 md:mx-20 font-semibold text-xl md:text-2xl">About this item:</h3>
+      <table className="my-8 w-[90%] md:w-fit mx-auto mb-12 text-sm md:text-lg" border={1}>
         <tbody>
           <tr>
             <td>Condition:</td>

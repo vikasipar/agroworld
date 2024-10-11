@@ -6,19 +6,20 @@ import { getCookie } from "@/hooks/useCookies";
 import { getRequestsByProviderId, acceptRequest } from "@/actions/getRequests";
 
 const ProductRequests = () => {
-  const providerId = getCookie("userId");
-  const queryClient = useQueryClient();
+  const providerId: any = getCookie("userId");
+  const queryClient: any = useQueryClient();
 
   // Fetch requests by provider ID
-  const { isLoading, isError, data, error } = useQuery<IRequest[]>({
+  const { isLoading, isError, data, error } = useQuery<any>({
     queryKey: ["userRequests", providerId],
-    queryFn: () => getRequestsByProviderId(providerId),
+    queryFn: () => getRequestsByProviderId(providerId), // Ensure this returns IRequest[]
     enabled: !!providerId,
   });
 
   // Handle accepting the request
   const mutation = useMutation({
-    mutationFn: ({ _id, productId }: { _id: string; productId: string }) => acceptRequest(_id, productId),
+    mutationFn: ({ _id, productId }: { _id: string; productId: string }) =>
+      acceptRequest(_id, productId),
     onSuccess: () => {
       queryClient.invalidateQueries(["userRequests", providerId]);
     },
@@ -57,7 +58,7 @@ const ProductRequests = () => {
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border border-gray-200">
+      <table className="text-xs md:text-lg w-full md:min-w-full bg-white border border-gray-200">
         <thead>
           <tr className="bg-gray-100 border-b">
             <th className="py-2 px-4 text-left">No.</th>
@@ -68,7 +69,7 @@ const ProductRequests = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((request: IRequest, index: number) => (
+          {data.map((request: IRequest | any, index: number) => (
             <tr key={request._id} className="border-b">
               <td className="py-2 px-4 max-w-[10%]">{index + 1}</td>
               <td className="py-2 px-4 capitalize max-w-[30%] text-blue-600">
@@ -82,10 +83,11 @@ const ProductRequests = () => {
                 className={`py-2 px-4 max-w-[10%] font-semibold border-2 rounded-lg text-sm text-center ${
                   request.requestAccepted
                     ? "text-green-600"
-                    : "text-blue-500 border-blue-600 cursor-pointer"
+                    : "text-white bg-blue-500 cursor-pointer"
                 }`}
                 onClick={() =>
-                  !request.requestAccepted && handleRequest(request._id, request.productId)
+                  !request.requestAccepted &&
+                  handleRequest(request._id, request.productId)
                 }
               >
                 {request.requestAccepted ? "Accepted" : "Accept (click)"}

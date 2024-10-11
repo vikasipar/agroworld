@@ -39,12 +39,12 @@ function DashboardPage() {
   return (
     <div className="w-full min-h-screen p-6 bg-gray-100">
       <div className="w-full">
-        <h1 className="text-3xl font-semibold my-4 text-left text-blue-600">
+        <h1 className="text-xl md:text-3xl font-semibold my-4 text-left text-blue-600">
           Hello {user.name}!
         </h1>
         <div className="flex flex-col md:flex-row w-full bg-white shadow-md rounded-lg overflow-hidden min-h-screen">
-          <nav className="w-full md:w-1/4 border-r-2 border-gray-300 md:border-r-0 md:border-b-2 md:border-b-gray-300">
-            <div className="flex flex-col gap-y-1 my-6 text-lg border-r-2 border-stone-300 p-7">
+          <nav className="w-full md:w-1/4">
+            <div className="flex flex-col gap-y-1 md:my-6 text-sm md:text-lg md:border-r-2 border-stone-300 p-7">
               <span
                 className={`border-2 border-stone-300 rounded-xl py-2 px-4 text-center cursor-pointer transition-all duration-300 flex items-center gap-x-2 ${
                   selectedTab === "requests"

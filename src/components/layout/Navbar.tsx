@@ -1,34 +1,36 @@
 "use client";
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/firebase.config";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 import { signOut } from "firebase/auth";
 import { setCookie, getCookie, deleteCookie } from "@/hooks/useCookies";
 import Weather from "./Weather";
 import { IUser } from "@/types/modelTypes";
 import { IoMdNotifications } from "react-icons/io";
+import { HiOutlineMenu } from "react-icons/hi";
+import { HiOutlineXMark } from "react-icons/hi2";
+import Sidebar from "./Sidebar";
 
 const Navbar = React.memo(() => {
   const [user] = useAuthState(auth);
   const router = useRouter();
+  const pathname = usePathname();
   const [userData, setUserData] = useState<IUser | null>(null);
-  const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
-  const [userRole, setUserRole] = useState<string | null>(
-    getCookie("userRole")
-  );
+  const [loading, setLoading] = useState(true);
+  const [sidebar, setSidebar] = useState(false);
+  const [isMounted, setIsMounted] = useState(false); // Track if component has mounted
 
-  // Initialize userLoggedIn based on cookie presence
-  useEffect(() => {
-    const emailFromCookie = getCookie("userEmail");
-    if (emailFromCookie) {
-      setUserLoggedIn(true); // Set userLoggedIn to true if userEmail cookie is present
-    }
-  }, []);
+  if (sidebar) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
 
-  // Fetch user data if user is logged in
   useEffect(() => {
+    setIsMounted(true); // Ensure component is client-side
+
     const fetchUserData = async () => {
       const userEmail = getCookie("userEmail");
       if (userEmail) {
@@ -40,155 +42,149 @@ const Navbar = React.memo(() => {
             setCookie("userName", data.user.name, 7);
             setCookie("userRole", data.user.role, 7);
             setCookie("userId", data.user._id, 7);
-            setUserRole(data.user.role); // Set userRole from fetched data
           } else {
             console.error("Error fetching user:", data.error);
           }
         } catch (error) {
           console.error("Error fetching user:", error);
+        } finally {
+          setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
     };
 
     if (user) {
       fetchUserData();
+    } else {
+      setLoading(false);
     }
   }, [user]);
 
-  const handleSignup = useCallback(() => {
+  const handleSignup = () => {
     router.push("/auth/login");
-  }, [router]);
+  };
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = () => {
     signOut(auth);
     deleteCookie("userEmail");
     deleteCookie("userName");
     deleteCookie("userRole");
     deleteCookie("userId");
-    setUserLoggedIn(false); // Reset userLoggedIn after logout
-    setUserRole(null); // Reset userRole after logout
-    router.push("/"); // Redirect to homepage after logout
-  }, [router]);
+    router.push("/");
+  };
 
-  // Memoize the Navbar content so it only re-renders when userLoggedIn or userRole changes
-  const navbarContent = useMemo(() => {
-    if (userLoggedIn) {
-      if (userRole === "user") {
-        return (
-          <div className="flex items-start justify-between py-4 px-9">
-            <div>
-              <Weather />
-            </div>
-            <div className="w-1/2">
-              <ul className="w-full flex justify-between items-center text-lg">
-                <li>
-                  <a href="/" className="w-fit">
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a href="/equipments" className="w-fit">
-                    Equipments
-                  </a>
-                </li>
-                <li>
-                  <a href="/articles" className="w-fit">
-                    Articles
-                  </a>
-                </li>
-                <li>
-                  <a href="/profile" className="text-3xl text-green-600 flex">
-                    <IoMdNotifications />
-                    <span className="h-3 w-3 -ml-3 bg-red-500 rounded-full mt-1"></span>
-                  </a>
-                </li>
-                <li>
-                  <Button onClick={handleLogout} variant={"primary"}>
-                    Logout
-                  </Button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        );
-      } else if (userRole === "provider") {
-        return (
-          <div className="flex items-start justify-between py-4 px-9">
-            <div>
-              <Weather />
-            </div>
-            <div className="w-1/2">
-              <ul className="w-full flex justify-between items-center text-lg">
-                <li>
-                  <a href="/" className="w-fit">
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a href="/equipments" className="w-fit">
-                    Equipments
-                  </a>
-                </li>
-                <li>
-                  <a href="/articles" className="w-fit">
-                    Articles
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/dashboard"
-                    className="w-fit flex items-center gap-x-2"
-                  >
-                    Dashboard
-                  </a>
-                </li>
-                <li>
-                  <Button onClick={handleLogout} variant={"primary"}>
-                    Logout
-                  </Button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        );
-      }
-    }
+  // Prevent mismatch by ensuring rendering happens only after the component is mounted on client
+  if (!isMounted) {
+    return null; // Render nothing on the server side
+  }
 
-    // If not logged in
-    return (
-      <div className="flex items-start justify-between py-4 px-9">
+  return (
+    <>
+      <div className="hidden lg:flex items-start justify-between py-4 px-9">
         <div>
           <Weather />
         </div>
         <div className="w-1/2">
           <ul className="w-full flex justify-between items-center text-lg">
-            <li>
+            <li
+              className={`${
+                pathname === "/" ? "border-b-2 border-green-400" : ""
+              }`}
+            >
               <a href="/" className="w-fit">
                 Home
               </a>
             </li>
-            <li>
+            <li
+              className={`${
+                pathname === "/equipments" ? "border-b-2 border-green-400" : ""
+              }`}
+            >
               <a href="/equipments" className="w-fit">
                 Equipments
               </a>
             </li>
-            <li>
+            <li
+              className={`${
+                pathname === "/articles" ? "border-b-2 border-green-400" : ""
+              }`}
+            >
               <a href="/articles" className="w-fit">
                 Articles
               </a>
             </li>
+            {loading ? (
+              <li>Loading...</li>
+            ) : (
+              user && (
+                <li>
+                  {userData?.role === "user" ? (
+                    <a href="/profile" className="text-3xl text-green-600 flex">
+                      <IoMdNotifications />
+                      <span className="h-3 w-3 -ml-3 bg-red-500 rounded-full mt-1"></span>
+                    </a>
+                  ) : (
+                    <a
+                      href="/dashboard"
+                      className={`${
+                        pathname === "/dashboard"
+                          ? "border-b-2 border-green-400"
+                          : ""
+                      } w-fit flex items-center gap-x-2`}
+                    >
+                      Dashboard
+                    </a>
+                  )}
+                </li>
+              )
+            )}
             <li>
-              <Button onClick={handleSignup} variant={"primary"}>
-                Login
-              </Button>
+              {user ? (
+                <Button onClick={handleLogout} variant={"primary"}>
+                  Logout
+                </Button>
+              ) : (
+                <Button onClick={handleSignup} variant={"primary"}>
+                  Login
+                </Button>
+              )}
             </li>
           </ul>
         </div>
       </div>
-    );
-  }, [userLoggedIn, userRole, handleLogout, handleSignup]);
-
-  return <>{navbarContent}</>;
+      <div className="w-full flex lg:hidden items-center justify-between py-2 px-6 bg-white shadow-md h-12 z-[9999999]">
+        <span className="text-xl font-semibold text-green-600">
+          <a href="/" className="w-fit" onClick={() => setSidebar(false)}>
+            AgroWorld
+          </a>
+        </span>
+        {sidebar ? (
+          <HiOutlineXMark
+            className="text-2xl"
+            onClick={() => setSidebar(false)}
+          />
+        ) : (
+          <HiOutlineMenu
+            className="text-2xl"
+            onClick={() => setSidebar(true)}
+          />
+        )}
+      </div>
+      {/* {sidebar && ( */}
+      <Sidebar
+        sidebar={sidebar}
+        pathname={pathname}
+        user={user}
+        userData={userData}
+        handleLogout={handleLogout}
+        handleSignup={handleSignup}
+        setSidebar={setSidebar}
+      />
+      {/* )} */}
+    </>
+  );
 });
 
 Navbar.displayName = "Navbar";

@@ -89,7 +89,7 @@ const SignupPage = () => {
 
   return (
     <section className="flex items-center justify-center min-h-screen bg-gray-50 p-6">
-      <Card className="w-full max-w-md shadow-lg">
+      <Card className="w-full max-w-md md:shadow-lg">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold text-green-500">
             Sign Up
@@ -102,7 +102,7 @@ const SignupPage = () => {
               {firebaseError.message}
             </p>
           )}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-8 md:space-y-4">
             <div className="space-y-1">
               <Label htmlFor="name" className="text-base font-medium">
                 Name

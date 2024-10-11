@@ -1,4 +1,5 @@
 const AMOUNT = 1000;
+declare const window: any;
 
 export const usePayment = async (
   userEmail: string,

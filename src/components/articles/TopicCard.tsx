@@ -24,7 +24,7 @@ const TopicCard: React.FC<{ topic: Topic }> = ({ topic }) => {
           />
         </CardHeader>
         <CardContent>
-          <CardTitle className="mt-2 text-lg font-semibold line-clamp-2">{topic.name}</CardTitle>
+          <CardTitle className="mt-2 text-base md:text-lg font-semibold line-clamp-2">{topic.name}</CardTitle>
           <p className="text-sm text-gray-900 text-center font-medium mt-1 bg-green-300 px-2 w-fit mx-auto line-clamp-1">
             {/* {topic.category} */}
           </p>
