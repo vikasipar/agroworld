@@ -18,7 +18,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <Link href={`/equipments/${product.slug}`}>
-      <Card className="w-[280px] h-[360px] shadow-xl border-2 border-stone-300 hover:shadow-2xl hover:drop-shadow-2xl duration-300 text-center">
+      <Card className="w-[280px] h-[360px] md:shadow-xl border md:border-2 border-stone-100 md:border-stone-300 hover:shadow-2xl hover:drop-shadow-2xl duration-300 text-center">
         <CardHeader className="h-[290px]">
           <Image
             src={product.url}

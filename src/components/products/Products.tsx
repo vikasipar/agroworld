@@ -67,7 +67,7 @@ const Products = () => {
               </h2>
               <div className="flex items-center justify-center md:justify-start w-full md:w-[94%] mx-auto">
                 <Carousel className="w-[90%] md:w-[96%] mx-auto my-4 md:my-9">
-                  <CarouselContent className="md:space-x-10">
+                  <CarouselContent className="space-x-2 md:space-x-10">
                     {filteredProducts.map((product: IProduct) => (
                       <CarouselItem className="md:basis-1/4" key={product.slug}>
                         <ProductCard product={product} />
