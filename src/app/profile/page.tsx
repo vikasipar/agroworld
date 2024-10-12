@@ -4,12 +4,12 @@ import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import { MdFormatListBulleted } from "react-icons/md";
 import { useGetCookie } from "@/hooks/useCookies";
 import dynamic from "next/dynamic";
-
 const MyOrders = dynamic(() => import("@/components/profile/MyOrders"), {
   ssr: false,
+  loading: () => <p>Loading My Orders...</p>, // Fallback UI while loading
 });
 
-export default async function ProfilePage() {
+export default function ProfilePage() {
   const [user, setUser] = useState<any>(null);
   const router = useRouter(); // Initialize the router
 

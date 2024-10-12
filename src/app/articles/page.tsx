@@ -10,7 +10,7 @@ import {
 
 import ArticleCard from "@/components/articles/ArticleCard";
 
-export default async function ArticlesPage() {
+export default function ArticlesPage() {
   const topics = [
     {
       topic: "Crops: The Foundation of Agriculture",

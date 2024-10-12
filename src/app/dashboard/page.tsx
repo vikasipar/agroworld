@@ -8,7 +8,7 @@ import { CgPlayListCheck } from "react-icons/cg";
 import { useGetCookie } from "@/hooks/useCookies";
 import ProductRequests from "@/components/dashboard/ProductRequests";
 
-export default async function DashboardPage() {
+export default function DashboardPage() {
   const [user, setUser] = useState<any>(null);
   const [selectedTab, setSelectedTab] = useState<string>("requests");
   const router = useRouter(); // Initialize the router

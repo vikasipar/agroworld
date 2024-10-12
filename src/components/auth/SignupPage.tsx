@@ -16,7 +16,7 @@ import { auth } from "@/app/firebase/firebase.config";
 import { useRouter } from "next/navigation";
 import { useGetCookie } from "@/hooks/useCookies";
 
-export default async function SignupPage() {
+export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [role, setRole] = useState<"user" | "provider">("user");

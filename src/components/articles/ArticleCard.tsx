@@ -27,7 +27,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, collection }) => {
 
   return (
     <div onClick={handleCardClick}>
-      <Card className="w-[280px] h-[360px] shadow-xl border-2 border-stone-300 hover:shadow-2xl hover:drop-shadow-2xl duration-300 text-center">
+      <Card className="w-[280px] h-[360px] shadow-xl border-2 border-stone-300 hover:shadow-2xl hover:drop-shadow-2xl duration-300 text-center hover:cursor-pointer">
         <CardHeader className="h-[240px] p-0"> {/* Adjust the height */ }
           <Image
             src={article.img}
