@@ -10,13 +10,13 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { getCookie } from "@/hooks/useCookies";
+import { useGetCookie } from "@/hooks/useCookies";
 
 // Dynamically import ProductCard for code splitting
 const ProductCard = dynamic(() => import("./ProductCard"), { ssr: false });
 
 const Products = () => {
-  const userId: string | null = getCookie("userId");
+  const userId: string | null = useGetCookie("userId");
 
   // Fetch all products data with extended caching and performance optimizations
   const { isLoading, isError, data, error } = useQuery<IProduct[]>({

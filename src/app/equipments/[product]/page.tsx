@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "@/actions/getProduct";
 import { IProduct, IRequest } from "@/types/modelTypes";
-import { getCookie } from "@/hooks/useCookies";
+import { useGetCookie } from "@/hooks/useCookies";
 import { toast } from "sonner";
 import { usePayment } from "@/hooks/usePayment";
 import RelatedProducts from "@/components/products/RelatedProducts";
@@ -20,11 +20,11 @@ const ProductPage = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [isPaymentDone, setIsPaymentDone] = useState<boolean>(false);
-  const userId: string | null = getCookie("userId");
+  const userId: string | null = useGetCookie("userId");
 
   useEffect(() => {
-    const userEmail: any = getCookie("useEmail");
-    const userName: any = getCookie("userName");
+    const userEmail: any = useGetCookie("useEmail");
+    const userName: any = useGetCookie("userName");
     if (userEmail) {
       setIsUserLoggedIn(true);
     } else {
@@ -62,8 +62,8 @@ const ProductPage = () => {
 
   // Handle payment
   const handlePayment = () => {
-    const userEmail: any = getCookie("useEmail");
-    const userName: any = getCookie("userName");
+    const userEmail: any = useGetCookie("useEmail");
+    const userName: any = useGetCookie("userName");
     // if (isUserLoggedIn) {
     usePayment(userEmail, userName, setIsProcessing, setIsPaymentDone);
     // }
@@ -74,8 +74,8 @@ const ProductPage = () => {
   useEffect(() => {
     const sendRequest = async () => {
       // Ensure currentProduct and user information exist before sending the request
-      const userEmail = getCookie("userEmail"); // Ensure this is spelled correctly
-      const userName = getCookie("userName");
+      const userEmail = useGetCookie("userEmail"); // Ensure this is spelled correctly
+      const userName = useGetCookie("userName");
 
       if (isPaymentDone && currentProduct && userId && userEmail && userName) {
         const payload: IRequest = {

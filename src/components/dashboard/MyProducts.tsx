@@ -3,14 +3,14 @@ import React, { useEffect } from "react";
 import { TbAlertTriangle } from "react-icons/tb";
 import { getAllProducts } from "@/actions/getProduct";
 import { useQuery } from "@tanstack/react-query";
-import { getCookie } from "@/hooks/useCookies";
+import { useGetCookie } from "@/hooks/useCookies";
 import { IProduct } from "@/types/modelTypes";
 import { useRouter } from "next/navigation";
 import ProductCard from "@/components/products/ProductCard";
 
 const MyProducts = () => {
   const router = useRouter();
-  const userId = getCookie("userId");
+  const userId = useGetCookie("userId");
 
   useEffect(() => {
     if (!userId) {

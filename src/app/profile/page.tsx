@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import { MdFormatListBulleted } from "react-icons/md";
-import { getCookie } from "@/hooks/useCookies";
+import { useGetCookie } from "@/hooks/useCookies";
 import dynamic from "next/dynamic";
 
 const MyOrders = dynamic(() => import("@/components/profile/MyOrders"), {
@@ -13,19 +13,19 @@ export default async function ProfilePage() {
   const [user, setUser] = useState<any>(null);
   const router = useRouter(); // Initialize the router
 
-  const loggedIn = getCookie("userEmail");
+  const loggedIn = useGetCookie("userEmail");
 
   // Move all useEffects outside of conditional checks
   useEffect(() => {
     if (loggedIn) {
-      const userRole = getCookie("userRole");
+      const userRole = useGetCookie("userRole");
       if (userRole !== "user") {
         router.push("/"); // Redirect if not a user
       } else {
         // Set user details if logged in
         setUser({
-          name: getCookie("userName"),
-          email: getCookie("userEmail"),
+          name: useGetCookie("userName"),
+          email: useGetCookie("userEmail"),
           role: userRole,
         });
       }
@@ -35,7 +35,7 @@ export default async function ProfilePage() {
     }
   }, [loggedIn, router]);
 
-  const userEmail = getCookie("userEmail");
+  const userEmail = useGetCookie("userEmail");
 
   useEffect(() => {
     if (!userEmail) {

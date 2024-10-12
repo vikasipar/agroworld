@@ -6,11 +6,11 @@ import { getAllProducts } from "@/actions/getProduct";
 import { IProduct } from "@/types/modelTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "@/hooks/useDebounce";
-import { getCookie } from "@/hooks/useCookies";
+import { useGetCookie } from "@/hooks/useCookies";
 
 const SearchProduct = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const userId = getCookie("userId");
+  const userId = useGetCookie("userId");
   // Debounce the search query to avoid triggering a search on every keystroke
   const debouncedSearchQuery = useDebounce(searchQuery, 2000);
 

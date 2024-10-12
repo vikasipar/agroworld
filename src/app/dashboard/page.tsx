@@ -5,7 +5,7 @@ import ProductForm from "@/components/dashboard/ProductForm";
 import MyProducts from "@/components/dashboard/MyProducts";
 import { MdFormatListBulleted, MdOutlinePlaylistAdd } from "react-icons/md";
 import { CgPlayListCheck } from "react-icons/cg";
-import { getCookie } from "@/hooks/useCookies";
+import { useGetCookie } from "@/hooks/useCookies";
 import ProductRequests from "@/components/dashboard/ProductRequests";
 
 export default async function DashboardPage() {
@@ -13,17 +13,17 @@ export default async function DashboardPage() {
   const [selectedTab, setSelectedTab] = useState<string>("requests");
   const router = useRouter(); // Initialize the router
 
-  const loggedIn = getCookie("userEmail");
+  const loggedIn = useGetCookie("userEmail");
 
   useEffect(() => {
     if (loggedIn) {
-      if (getCookie("userRole") !== "provider") {
+      if (useGetCookie("userRole") !== "provider") {
         router.push("/");
       }
       setUser({
-        name: getCookie("userName"),
-        email: getCookie("userEmail"),
-        role: getCookie("userRole"),
+        name: useGetCookie("userName"),
+        email: useGetCookie("userEmail"),
+        role: useGetCookie("userRole"),
       });
     } else {
       // Redirect to the login page if user is not logged in

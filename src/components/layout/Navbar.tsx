@@ -5,13 +5,19 @@ import { auth } from "@/app/firebase/firebase.config";
 import { useRouter, usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 import { signOut } from "firebase/auth";
-import { setCookie, getCookie, deleteCookie } from "@/hooks/useCookies";
+import {
+  useSetCookie,
+  useGetCookie,
+  useDeleteCookie,
+} from "@/hooks/useCookies";
 import Weather from "./Weather";
 import { IUser } from "@/types/modelTypes";
 import { IoMdNotifications } from "react-icons/io";
 import { HiOutlineMenu } from "react-icons/hi";
 import { HiOutlineXMark } from "react-icons/hi2";
 import Sidebar from "./Sidebar";
+
+declare const window: any;
 
 const Navbar = React.memo(() => {
   const [user] = useAuthState(auth);
@@ -22,26 +28,31 @@ const Navbar = React.memo(() => {
   const [sidebar, setSidebar] = useState(false);
   const [isMounted, setIsMounted] = useState(false); // Track if component has mounted
 
-  if (sidebar) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
+  useEffect(() => {
+    // Ensure this code only runs in the client side
+    if (isMounted) {
+      if (sidebar) {
+        window.document.body.style.overflow = "hidden";
+      } else {
+        window.document.body.style.overflow = "auto";
+      }
+    }
+  }, [sidebar, isMounted]);
 
   useEffect(() => {
-    setIsMounted(true); // Ensure component is client-side
-
+    setIsMounted(true); // Mark that the component has mounted (client-side)
+    
     const fetchUserData = async () => {
-      const userEmail = getCookie("userEmail");
+      const userEmail = useGetCookie("userEmail");
       if (userEmail) {
         try {
           const res = await fetch(`/api/users/${userEmail}`);
           const data = await res.json();
           if (res.ok) {
             setUserData(data.user);
-            setCookie("userName", data.user.name, 7);
-            setCookie("userRole", data.user.role, 7);
-            setCookie("userId", data.user._id, 7);
+            useSetCookie("userName", data.user.name, 7);
+            useSetCookie("userRole", data.user.role, 7);
+            useSetCookie("userId", data.user._id, 7);
           } else {
             console.error("Error fetching user:", data.error);
           }
@@ -68,10 +79,10 @@ const Navbar = React.memo(() => {
 
   const handleLogout = () => {
     signOut(auth);
-    deleteCookie("userEmail");
-    deleteCookie("userName");
-    deleteCookie("userRole");
-    deleteCookie("userId");
+    useDeleteCookie("userEmail");
+    useDeleteCookie("userName");
+    useDeleteCookie("userRole");
+    useDeleteCookie("userId");
     router.push("/");
   };
 
@@ -172,7 +183,6 @@ const Navbar = React.memo(() => {
           />
         )}
       </div>
-      {/* {sidebar && ( */}
       <Sidebar
         sidebar={sidebar}
         pathname={pathname}
@@ -182,7 +192,6 @@ const Navbar = React.memo(() => {
         handleSignup={handleSignup}
         setSidebar={setSidebar}
       />
-      {/* )} */}
     </>
   );
 });

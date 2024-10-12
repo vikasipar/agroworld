@@ -14,7 +14,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/firebase.config";
 import { useRouter } from "next/navigation";
-import { getCookie } from "@/hooks/useCookies";
+import { useGetCookie } from "@/hooks/useCookies";
 
 export default async function SignupPage() {
   const [email, setEmail] = useState("");
@@ -78,7 +78,7 @@ export default async function SignupPage() {
   };
 
   useEffect(() => {
-    if (getCookie("userEmail")) {
+    if (useGetCookie("userEmail")) {
       router.push("/");
     }
   }, []);

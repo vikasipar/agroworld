@@ -10,6 +10,11 @@ export const usePayment = async (
   setIsProcessing(true);
 
   try {
+    // Ensure that this code only runs on the client side
+    if (typeof window === "undefined") {
+      throw new Error("window is not available");
+    }
+
     // Make a request to create the Razorpay order
     const res = await fetch("/api/create-order", { method: "POST" });
     const data = await res.json();
@@ -21,11 +26,11 @@ export const usePayment = async (
     // Dynamically load the Razorpay script if it hasn't been loaded already
     const loadRazorpayScript = () => {
       return new Promise<void>((resolve, reject) => {
-        const script = document.createElement("script");
+        const script = window.document.createElement("script");
         script.src = "https://checkout.razorpay.com/v1/checkout.js";
         script.onload = () => resolve();
         script.onerror = () => reject("Failed to load Razorpay script");
-        document.body.appendChild(script);
+        window.document.body.appendChild(script);
       });
     };
 

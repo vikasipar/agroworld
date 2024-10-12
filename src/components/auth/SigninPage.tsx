@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/firebase.config";
-import { getCookie, setCookie } from "@/hooks/useCookies";
+import { useGetCookie, useSetCookie } from "@/hooks/useCookies";
 
 export default async function SigninPage() {
   const [email, setEmail] = useState("");
@@ -36,7 +36,7 @@ export default async function SigninPage() {
     try {
       const res = await signInWithEmailAndPassword(email, password);
       if (res) {
-        setCookie("userEmail", email, 7);
+        useSetCookie("userEmail", email, 7);
         setEmail("");
         setPassword("");
         router.push("/");
@@ -50,7 +50,7 @@ export default async function SigninPage() {
   };
 
   useEffect(() => {
-    if (getCookie("userEmail")) {
+    if (useGetCookie("userEmail")) {
       router.push("/");
     }
   }, []);

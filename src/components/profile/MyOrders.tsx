@@ -2,11 +2,11 @@ import React from "react";
 import { TbAlertTriangle } from "react-icons/tb";
 import { IRequest } from "@/types/modelTypes";
 import { useQuery } from "@tanstack/react-query";
-import { getCookie } from "@/hooks/useCookies";
+import { useGetCookie } from "@/hooks/useCookies";
 import { getRequestsByUserId } from "@/actions/getRequests";
 
 const MyOrders = () => {
-  const userId = getCookie("userId");
+  const userId = useGetCookie("userId");
 
   // Fetch requests by user ID
   const { isLoading, isError, data, error } = useQuery<any>({
