@@ -1,5 +1,5 @@
 import React from "react";
-import Weather from "./Weather";
+// import Weather from "./Weather";
 import { Button } from "../ui/button";
 
 interface SidebarProps {
@@ -110,9 +110,9 @@ const Sidebar: React.FC<SidebarProps> = ({
             )}
           </li>
         </ul>
-        <div className="mt-20">
+        {/* <div className="mt-20">
           <Weather />
-        </div>
+        </div> */}
       </div>
     </div>
   );

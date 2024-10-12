@@ -10,7 +10,7 @@ import {
   useGetCookie,
   useDeleteCookie,
 } from "@/hooks/useCookies";
-import Weather from "./Weather";
+// import Weather from "./Weather";
 import { IUser } from "@/types/modelTypes";
 import { IoMdNotifications } from "react-icons/io";
 import { HiOutlineMenu } from "react-icons/hi";
@@ -41,7 +41,7 @@ const Navbar = React.memo(() => {
 
   useEffect(() => {
     setIsMounted(true); // Mark that the component has mounted (client-side)
-    
+
     const fetchUserData = async () => {
       const userEmail = useGetCookie("userEmail");
       if (userEmail) {
@@ -94,9 +94,11 @@ const Navbar = React.memo(() => {
   return (
     <>
       <div className="hidden lg:flex items-start justify-between py-4 px-9">
-        <div>
-          <Weather />
-        </div>
+        <span className="text-2xl font-semibold text-green-600">
+          <a href="/" className="w-fit" onClick={() => setSidebar(false)}>
+            AgroWorld
+          </a>
+        </span>
         <div className="w-1/2">
           <ul className="w-full flex justify-between items-center text-lg">
             <li
