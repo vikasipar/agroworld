@@ -8,7 +8,7 @@ import { CgPlayListCheck } from "react-icons/cg";
 import { getCookie } from "@/hooks/useCookies";
 import ProductRequests from "@/components/dashboard/ProductRequests";
 
-function DashboardPage() {
+export default async function DashboardPage() {
   const [user, setUser] = useState<any>(null);
   const [selectedTab, setSelectedTab] = useState<string>("requests");
   const router = useRouter(); // Initialize the router
@@ -90,5 +90,3 @@ function DashboardPage() {
     </div>
   );
 }
-
-export default DashboardPage;

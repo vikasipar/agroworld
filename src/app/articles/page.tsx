@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import React from "react";
 import {
   Carousel,
@@ -10,7 +10,7 @@ import {
 
 import ArticleCard from "@/components/articles/ArticleCard";
 
-function ArticlesPage() {
+export default async function ArticlesPage() {
   const topics = [
     {
       topic: "Crops: The Foundation of Agriculture",
@@ -304,5 +304,3 @@ function ArticlesPage() {
     </div>
   );
 }
-
-export default ArticlesPage;

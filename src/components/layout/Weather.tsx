@@ -56,7 +56,7 @@ const Weather = () => {
 
   return (
     <div>
-      <span className="font-medium">[ {weather.city.name} ]</span>
+      {/* <span className="font-medium">[ {weather.city.name} ]</span> */}
       {weather.list.map((forecast, index) => (
         <div
           key={index}
@@ -69,7 +69,7 @@ const Weather = () => {
           <span className="text-2xl font-normal mx-2 text-green-600">
             {forecast.main.temp}°C
           </span>
-          <small className="text-gray-500">{forecast.dt_txt}</small>
+          {/* <small className="text-gray-500">{forecast.dt_txt}</small> */}
         </div>
       ))}
     </div>

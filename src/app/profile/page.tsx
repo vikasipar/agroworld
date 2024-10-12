@@ -3,9 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import { MdFormatListBulleted } from "react-icons/md";
 import { getCookie } from "@/hooks/useCookies";
-import MyOrders from "@/components/profile/MyOrders";
+import dynamic from "next/dynamic";
 
-function ProfilePage() {
+const MyOrders = dynamic(() => import("@/components/profile/MyOrders"), {
+  ssr: false,
+});
+
+export default async function ProfilePage() {
   const [user, setUser] = useState<any>(null);
   const router = useRouter(); // Initialize the router
 
@@ -68,5 +72,3 @@ function ProfilePage() {
     </div>
   );
 }
-
-export default ProfilePage;
