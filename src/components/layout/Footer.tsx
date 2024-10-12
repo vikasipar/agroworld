@@ -14,7 +14,7 @@ const Footer = () => {
         </div>
 
         <div className="w-[90%] mx-auto md:w-[18%] mt-8 md:mt-0">
-          <h2 className="text-xl font-semibold mb-2 md:mb-4">Quick Links</h2>
+          <h2 className="text-base md:text-xl font-semibold mb-2 md:mb-4">Quick Links</h2>
           <ul className="space-y-1 md:space-y-2 text-sm md:text-base text-gray-100 ml-3">
             <li>
               <a href="/" className="hover:text-yellow-300 transition">

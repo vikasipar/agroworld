@@ -103,7 +103,7 @@ function ArticlePage() {
 
   return (
     <div className="container mx-auto p-4 md:p-8">
-      <article className="bg-white shadow-md rounded-lg p-2 md:p-10">
+      <article className="bg-white md:shadow-md rounded-lg p-2 md:p-10">
         <h1 className="text-2xl md:text-4xl font-bold mb-6 text-green-600">{title}</h1>
         <div className="w-[90%] md:w-[60%] mx-auto md:h-[400px] my-8">
           <Image

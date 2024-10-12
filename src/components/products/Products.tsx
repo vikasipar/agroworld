@@ -42,13 +42,15 @@ const Products = () => {
   }
 
   // Group products by category
-  const productsByCategory = Array.isArray(data) ? data.reduce((acc: any, product: IProduct) => {
-    if (!acc[product.Category]) {
-      acc[product.Category] = [];
-    }
-    acc[product.Category].push(product);
-    return acc;
-  }, {} as Record<string, IProduct[]>) : {};
+  const productsByCategory = Array.isArray(data)
+    ? data.reduce((acc: any, product: IProduct) => {
+        if (!acc[product.Category]) {
+          acc[product.Category] = [];
+        }
+        acc[product.Category].push(product);
+        return acc;
+      }, {} as Record<string, IProduct[]>)
+    : {};
 
   return (
     <div className="p-4">
@@ -63,9 +65,9 @@ const Products = () => {
               <h2 className="text-xl md:text-3xl font-semibold text-green-500 mb-4">
                 {category.replace(/-/g, " ")}
               </h2>
-              <div className="flex items-center justify-center md:justify-start w-[94%] mx-auto">
-                <Carousel className="w-full md:w-[96%] mx-auto my-4 md:my-9">
-                  <CarouselContent className="space-x-10">
+              <div className="flex items-center justify-center md:justify-start w-full md:w-[94%] mx-auto">
+                <Carousel className="w-[90%] md:w-[96%] mx-auto my-4 md:my-9">
+                  <CarouselContent className="md:space-x-10">
                     {filteredProducts.map((product: IProduct) => (
                       <CarouselItem className="md:basis-1/4" key={product.slug}>
                         <ProductCard product={product} />
