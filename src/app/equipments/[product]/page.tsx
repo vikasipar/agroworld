@@ -50,10 +50,10 @@ const ProductPage = () => {
       if (product) {
         const related = data.filter(
           (p) =>
-            p.provider !== userId && // Exclude products from the same provider
+            // p.provider !== userId &&
             p.Category === product.Category && // Match category
-            p.slug !== productSlug && // Exclude the current product
-            p.Available // Only include available products
+            p.slug !== productSlug
+          // && p.Available
         );
         setRelatedProducts(related);
       }
