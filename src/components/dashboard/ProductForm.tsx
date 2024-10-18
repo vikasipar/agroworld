@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
+import { CldUploadWidget } from "next-cloudinary";
+import { useGetCookie } from "@/hooks/useCookies";
 
 const ProductForm = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +18,7 @@ const ProductForm = () => {
       FuelType: "",
     },
     Accessories: "",
-    Ratings: "4",
+    Ratings: "4", // Default rating
     DeliveryOptions: "",
     ContactInformation: "",
     url: "",
@@ -25,12 +27,11 @@ const ProductForm = () => {
   });
 
   useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    if (userData) {
-      const parsedData = JSON.parse(userData);
+    const userId = useGetCookie("userId");
+    if (userId) {
       setFormData((prevData) => ({
         ...prevData,
-        provider: parsedData._id, // Set provider from userData
+        provider: userId,
       }));
     }
   }, []);
@@ -86,8 +87,9 @@ const ProductForm = () => {
       }
 
       const result = await response.json();
-    //   console.log("Product data submitted successfully:", result);
       alert("Product data submitted successfully!");
+
+      // Reset form data
       setFormData({
         EquipmentName: "",
         Category: "",
@@ -101,7 +103,7 @@ const ProductForm = () => {
           FuelType: "",
         },
         Accessories: "",
-        Ratings: "4", // Default rating
+        Ratings: "4", // Reset to default rating
         DeliveryOptions: "",
         ContactInformation: "",
         url: "",
@@ -114,7 +116,10 @@ const ProductForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-2 md:space-y-4 w-full md:w-[60%] mx-auto text-sm md:text-base">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-2 md:space-y-4 w-full md:w-[60%] mx-auto text-sm md:text-base"
+    >
       <input
         type="text"
         name="EquipmentName"
@@ -217,16 +222,31 @@ const ProductForm = () => {
         required
         className="w-full p-2 border border-gray-300 rounded"
       />
-      <input
-        type="text"
-        name="url"
-        placeholder="Product Image URL*"
-        value={formData.url}
-        onChange={handleChange}
-        required
-        className="w-full p-2 border border-gray-300 rounded"
-      />
-      {/* Removed input for slug and provider */}
+
+      <CldUploadWidget
+        uploadPreset="agroworld"
+        onSuccess={({ event, info }: any) => {
+          if (event === "success" && info?.secure_url) {
+            setFormData((prevData) => ({
+              ...prevData,
+              url: info.secure_url,
+            }));
+          }
+        }}
+      >
+        {({ open }) => {
+          return (
+            <button
+              type="button"
+              className="block w-1/2 border border-stone-500 p-1 text-stone-600 rounded-sm"
+              onClick={() => open()}
+            >
+              Upload an Image
+            </button>
+          );
+        }}
+      </CldUploadWidget>
+
       <Button type="submit" variant={"primary"}>
         Submit Product
       </Button>

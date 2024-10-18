@@ -57,7 +57,8 @@ const Products = () => {
       {productsByCategory && Object.keys(productsByCategory).length > 0 ? (
         Object.keys(productsByCategory).map((category) => {
           const filteredProducts = productsByCategory[category].filter(
-            (prod: IProduct) => prod.Available && prod.provider !== userId
+            // (prod: IProduct) => prod.Available && prod.provider !== userId
+            (prod: IProduct) => prod
           );
 
           return filteredProducts.length > 0 ? (

@@ -25,7 +25,7 @@ const nextConfig = {
     ];
   },
     images: {
-        domains: ['images.pexels.com', 'th.bing.com', 'thumbs.dreamstime.com', 'youtu.be'],
+        domains: ['images.pexels.com', 'th.bing.com', 'thumbs.dreamstime.com', 'youtu.be', "res.cloudinary.com"],
       },
 };
 
